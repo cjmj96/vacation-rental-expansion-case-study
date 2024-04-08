@@ -124,6 +124,67 @@ The data possess one main limitation, unknown sample size and generalizability, 
 
 I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/albany-ny-airbnb-data.db`.
 
+
+# **7. Process**
+
+To make sure the data we're working with is accurate, I used certain tools and techniques to process it. First, I looked at each piece of data closely to understand its limitations and challenges. Then, I applied processes to clean the data and remove any errors or inconsistencies. By doing this, we can trust that our results are based on accurate information.
+
+<a id="explore-data"></a>
+## **7.1 Explore data**
+
+
+
+The dataset is cross-sectional because I use a single quarterly update (March 10, 2024) from Inside Airbnb, containing Airbnb listings in a particular city for the following 12 months. Therefore, it only represents data in a single time point, there are no repeated observations over multiple time points, which is a defining characteristic of longitudinal data.
+
+
+The Airbnb data for Albany contain several files with data recorded on a daily level. One such file, `calendar.csv`, aggregates data about Airbnb listings, including `listing ID`, `date`, `availability`, `price`, `adjusted price`, `minimum nights`, and `maximum nights`, with 147,466 observations. The `listings_wide.csv` file contains information about listings including listing ID, URL, name, description, neighborhood overview, host information, and other details about each listing (75 columns) with 404 observations. Additionally, the `reviews_wide.csv` file stores information related to user's review for a listing  `listing_id`, `id`, `date`, `reviewer_id`, `reviewer_name`, and `comments` (6 columns) with 22,112 observations. The remaining files (`listings.csv`, `reviews.csv`) contain summary information about reviews and listings for visualization. The first one contains 18 columns with 404 observations and the second one, 2 columns with 22,112 observations.
+
+The SQL commands to obtain the previous results are the following (`sql/process/explore-data.sql`):
+```sql
+-- List column names for calendar table
+PRAGMA table_info(calendar);
+
+-- Count number of observations for calendar table
+SELECT COUNT(*)
+FROM calendar;
+
+-- List column names for calendar table
+PRAGMA table_info(listings);
+
+-- Count number of observations for listings table
+SELECT COUNT(*)
+FROM listings;
+
+-- List column names for listings_wide table
+PRAGMA table_info(listings_wide);
+
+-- Count number of observations for listings_wide table
+SELECT COUNT(*)
+FROM listings_wide;
+
+-- List column names for neighbourhoods table
+PRAGMA table_info(neighbourhoods);
+
+-- Count number of observations for neighbourhoods table
+SELECT COUNT(*)
+FROM neighbourhoods;
+
+-- List column names for reviews table
+PRAGMA table_info(reviews);
+
+-- Count number of observations for reviews table
+SELECT COUNT(*)
+FROM reviews;
+
+-- List column names for reviews_wide table
+PRAGMA table_info(reviews_wide);
+
+-- Count number of observations for reviews_wide table
+SELECT COUNT(*)
+FROM reviews_wide;
+```
+
+
 <a id="references"></a>
 ## **9. References**
 
