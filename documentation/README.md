@@ -48,7 +48,7 @@
   - [8.2 Format and adjust the data](#format-and-adjust-the-data)
   - [8.3 Get input from others](#get-input-from-others)
   - [8.4 Transform the data](#transform-the-data)
-
+- 9. [References](#references)
 
 
 <a id="introduction"></a>
@@ -123,3 +123,8 @@ The data possess one main limitation, unknown sample size and generalizability, 
 ### **7.4 Format data**
 
 I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/albany-ny-airbnb-data.db`.
+
+<a id="references"></a>
+## **9. References**
+
+[1] Statista, “Vacation Rentals - United States | Statista Market Forecast,” Statista. https://www.statista.com/outlook/mmo/travel-tourism/vacation-rentals/united-states (accessed April 8, 2024).
