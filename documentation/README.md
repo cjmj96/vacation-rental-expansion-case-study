@@ -108,19 +108,19 @@ The Airbnb data contain publicly available data from Airbnb listing of Albany in
 The data provided cover listings starting on March. 10, 2024 to March 9, 2025 (almost a year), not representative of the entire listing history. Therefore, this data is a sample. So, the insights derived from this data can only be functional under the specific circumstances of the proposed business task.
 
 <a id="check-data-credibility"></a>
-### **7.2 Check data credibility**
+### **6.2 Check data credibility**
 
 The credibility of our data can be determined using the ROCCC system:
 
 The data is reliable because it was collected by Airbnb. The data is original, because it was collected by Airbnb. The data is comprehensive because it contains all information needed to answers the guiding questions to produce insights that it could drive the decision making of the stakeholders. The data is current, because the data has a timeframe that covers the most up-to-date data. The data is cited because the data was obtained from the original source.
 
 <a id="understand-data-limitations"></a>
-### **7.3 Understand data limitations**
+### **6.3 Understand data limitations**
 
 The data possess one main limitation, unknown sample size and generalizability, making it difficult to draw conclusions about the entire population. However, the data still holds value for gaining insights under the specific circumstances imposed by the business task.
 
 <a id="format-data"></a>
-### **7.4 Format data**
+### **6.4 Format data**
 
 I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/albany-ny-airbnb-data.db`.
 
