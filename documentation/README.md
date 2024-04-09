@@ -23,7 +23,7 @@
     - [7.2.1 Describe statistical measures associated with data integrity](#describe-statistical-measures-associated-with-data-integrity)
     - [7.2.2 Overcome the challenges of insufficient data](#overcome-the-challenges-of-insufficient-data)
     - [7.2.3 Discover data constraints and clean data](#discover-data-constraints-and-clean-data)
-      - [7.2.3.1 Check data type](#check-data-type)
+      - [7.2.3.1 Corroborate data types](#corroborate-data-types)
       - [7.2.3.2 Check data range](#check-data-range)
       - [7.2.3.3 Check mandatory data](#check-mandatory-data)
       - [7.2.3.4 Check unique data](#check-unique-data)
@@ -125,12 +125,12 @@ The data possess one main limitation, unknown sample size and generalizability, 
 I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/albany-ny-airbnb-data.db`.
 
 
-# **7. Process**
+## **7. Process**
 
 To make sure the data we're working with is accurate, I used certain tools and techniques to process it. First, I looked at each piece of data closely to understand its limitations and challenges. Then, I applied processes to clean the data and remove any errors or inconsistencies. By doing this, we can trust that our results are based on accurate information.
 
 <a id="explore-data"></a>
-## **7.1 Explore data**
+### **7.1 Explore data**
 
 
 
@@ -184,6 +184,31 @@ SELECT COUNT(*)
 FROM reviews_wide;
 ```
 
+<a id="check-data-integrity"></a>
+### **7.2 Check data integrity**
+
+Determining data integrity is a critical process in data analytics to ensure that data is accurate, complete, and remains consistent throughout the analysis. In the following sections, I will demonstrate the application of various techniques designed to achieve this goal. These techniques aim to provide a thorough and effective means of managing and controlling the data during the analysis process.
+
+<a id="describe-statistical-measures-associated-with-data-integrity"
+#### 7.2.1 Describe statistical measures associated with data integrity
+
+As previously mentioned, the sample size is unknown so the statistical power, the feasibility to perform hypothesis testing or report a margin of error is not possible. With this in mind I will only report data variability to provide some sense of uncertainty (spread of data, margin of error (indirectly), confidence intervals (indirectly)).
+
+<a id="overcome-the-challenges-of-insufficient-data"
+#### 7.2.2 Overcome the challenges of insufficient data
+
+I decided to work with publicly available data that comes from Inside Airbnb.
+
+<a id="discover-data-constraints"></a>
+#### 7.2.3 Discover data constraints and clean data
+
+Data constraints refers to the limitations that affect the way you gather, clean, analyze, and interpret information. These constraints can be related to data volume, variety, quality, accessibility, timeline, and the overall effectivenes of data-driven insights. In the following sections, I will demonstrate the various methods to overcome these constraints.
+
+
+<a id="corroborate-data-types"></a>
+#### 7.2.3.1 Corroborate data types
+
+In the process of data cleaning, I checked all features in the dataset to ensure they presented the correct data types. When examining the `calendar` table, the `date` and `price` features possess incorrect data types (TEXT data type). So, I converted to its appropiate data types, being TIMESTAMP and FLOAT respectively. The `adjusted_price` column was eliminated due to being full of missing values.`
 
 <a id="references"></a>
 ## **9. References**
