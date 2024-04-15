@@ -101,7 +101,7 @@ The Spire property group ask you to analyze public data from Airbnb to answer qu
 In this phase, I gather the data, describe it, ensure it has the correct format, credibility, and understand its limitations. I use the historical listing data from Airbnb of Albany. The data was in csv format, which has reading and writing performance limitations. With that in mind, I create a database, containing tables representing each file. The data is credible, so the insights obtained will be of a prescriptive nature.
 
 <a id="describe-data"></a>
-### **6.1 [Describe](Describe) data**
+### **6.1 Describe data**
 
 The Airbnb data contain publicly available data from Airbnb listing of Albany in the New York state. The data was obtained from the Inside Airbnb platform. This data doesn't include private information about renters or hosts, but focuses on details about the listings themselves. It contains data about listing information (entire apartment, private room, etc.), data, pricing, availability, and review data.
 
