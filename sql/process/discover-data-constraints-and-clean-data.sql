@@ -1,3 +1,6 @@
+
+-- CHECK DATA TYPES
+
 -- Step 1: Add a new column with the DATE data type
 ALTER TABLE calendar ADD COLUMN my_new_date DATE;
 
@@ -305,3 +308,50 @@ ALTER TABLE listings DROP COLUMN reviews_per_month;
 
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_reviews_per_month TO reviews_per_month;
+
+-- VERIFY DATA RANGE 
+
+-- Filter out that doesn't meet the following conditions 
+--- DELETE FROM calendar
+SELECT * 
+FROM calendar
+WHERE (minimum_nights BETWEEN 1 AND 365) AND (maximum_nights BETWEEN 1 AND 1125) AND (DATE BETWEEN '2024-03-10' AND '2025-03-10') AND (available IN (0, 1)) AND (price > 0)
+
+-- Filter out that doesn't meet the following conditions 
+--- DELETE FROM calendar
+SELECT * 
+FROM listings_wide
+WHERE (property_type IN (SELECT DISTINCT property_type FROM listings_wide)) AND
+  (room_type IN (SELECT DISTINCT room_type FROM listings_wide)) AND
+  (accommodates > 0) AND
+  (bedrooms > 0) AND
+  (beds > 0) AND
+  (minimum_nights BETWEEN 1 AND 365) AND
+  (maximum_nights BETWEEN 1 AND 1125) AND
+  (availability_30 BETWEEN 0 AND 30) AND
+  (availability_60 BETWEEN 0 AND 60) AND
+  (availability_90 BETWEEN 0 AND 90) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (review_scores_rating BETWEEN 0 AND 5) AND
+  (review_scores_accuracy BETWEEN 0 AND 5) AND
+  (review_scores_cleanliness BETWEEN 0 AND 5) AND
+  (review_scores_checkin BETWEEN 0 AND 5) AND
+  (review_scores_communication BETWEEN 0 AND 5) AND
+  (review_scores_location BETWEEN 0 AND 5) AND
+  (review_scores_value BETWEEN 0 AND 5) AND
+  (calculated_host_listings_count > 0) AND
+  (calculated_host_listings_count_entire_homes >= 0) AND
+  (calculated_host_listings_count_private_rooms >= 0) AND
+  (calculated_host_listings_count_shared_rooms >= 0) AND
+  (reviews_per_month >= 0) AND
+  (last_scraped IN (SELECT DISTINCT last_scraped FROM listings_wide)) AND
+  (host_is_superhost IN (SELECT DISTINCT host_is_superhost FROM listings_wide)) AND
+  (host_has_profile_pic IN (SELECT DISTINCT host_has_profile_pic FROM listings_wide)) AND
+  (host_identity_verified IN (SELECT DISTINCT host_identity_verified FROM listings_wide)) AND
+  (bathrooms > 0) AND
+  (price > 0) AND
+  (has_availability IN (SELECT DISTINCT has_availability FROM listings_wide)) AND
+  (instant_bookable IN (SELECT DISTINCT instant_bookable FROM listings_wide)) AND
+  (first_review <= '2024-03-11') AND
+  (last_review <= '2024-03-11') AND
+  (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide)) 
