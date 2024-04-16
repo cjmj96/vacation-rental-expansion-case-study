@@ -311,17 +311,22 @@ ALTER TABLE listings RENAME COLUMN new_reviews_per_month TO reviews_per_month;
 
 -- VERIFY DATA RANGE 
 
--- Filter out that doesn't meet the following conditions 
+-- Filter out data that doesn't meet the following conditions (calendar table) 
 --- DELETE FROM calendar
 SELECT * 
 FROM calendar
 WHERE (minimum_nights BETWEEN 1 AND 365) AND (maximum_nights BETWEEN 1 AND 1125) AND (DATE BETWEEN '2024-03-10' AND '2025-03-10') AND (available IN (0, 1)) AND (price > 0)
 
--- Filter out that doesn't meet the following conditions 
---- DELETE FROM calendar
+-- Filter out data that doesn't meet the following conditions (listings_wide)
 SELECT * 
 FROM listings_wide
-WHERE (property_type IN (SELECT DISTINCT property_type FROM listings_wide)) AND
+WHERE (source IN (SELECT DISTINCT source FROM listings_wide)) AND
+  (host_response_time IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
+  (host_response_rate > 0) AND
+  (host_acceptance_rate > 0) AND
+  (host_listings_count > 0) AND
+  (host_total_listings_count > 0) AND 
+  (property_type IN (SELECT DISTINCT property_type FROM listings_wide)) AND
   (room_type IN (SELECT DISTINCT room_type FROM listings_wide)) AND
   (accommodates > 0) AND
   (bedrooms > 0) AND
@@ -354,4 +359,7 @@ WHERE (property_type IN (SELECT DISTINCT property_type FROM listings_wide)) AND
   (instant_bookable IN (SELECT DISTINCT instant_bookable FROM listings_wide)) AND
   (first_review <= '2024-03-11') AND
   (last_review <= '2024-03-11') AND
-  (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide)) 
+  (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide))
+ 
+  
+  
