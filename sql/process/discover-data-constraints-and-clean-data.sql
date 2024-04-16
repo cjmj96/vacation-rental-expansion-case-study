@@ -257,6 +257,33 @@ FROM Counts;
 -- Drop calendar_updated column
 ALTER TABLE listings_wide DROP COLUMN calendar_updated;
 
+-- Drop neighbourhood column
+ALTER TABLE listings_wide DROP COLUMN neighbourhood;
+
+-- Drop neighbourhood_group_cleansed column
+ALTER TABLE listings_wide DROP COLUMN neighbourhood_group_cleansed;
+
+-- Drop minimum_minimum_nights column
+ALTER TABLE listings_wide DROP COLUMN minimum_minimum_nights;
+
+-- Drop maximum_minimum_nights column
+ALTER TABLE listings_wide DROP COLUMN maximum_minimum_nights;
+
+-- Drop minimum_maximum_nights column
+ALTER TABLE listings_wide DROP COLUMN minimum_maximum_nights;
+
+-- Drop maximum_maximum_nights column
+ALTER TABLE listings_wide DROP COLUMN maximum_maximum_nights;
+
+-- Drop minimum_nights_avg_ntm column
+ALTER TABLE listings_wide DROP COLUMN minimum_nights_avg_ntm;
+
+-- Drop maximum_nights_avg_ntm column
+ALTER TABLE listings_wide DROP COLUMN maximum_nights_avg_ntm;
+
+-- Drop license column
+ALTER TABLE listings_wide DROP COLUMN license;
+
 -- Step 1: Add a new column with the DATE data type
 ALTER TABLE reviews_wide ADD COLUMN new_date DATE;
 
