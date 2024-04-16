@@ -344,7 +344,7 @@ SELECT *
 FROM calendar
 WHERE (minimum_nights BETWEEN 1 AND 365) AND (maximum_nights BETWEEN 1 AND 1125) AND (DATE BETWEEN '2024-03-10' AND '2025-03-10') AND (available IN (0, 1)) AND (price > 0)
 
--- Filter out data that doesn't meet the following conditions (listings_wide)
+-- Filter out data that doesn't meet the following conditions (listings_wide table)
 SELECT * 
 FROM listings_wide
 WHERE (source IN (SELECT DISTINCT source FROM listings_wide)) AND
@@ -387,6 +387,8 @@ WHERE (source IN (SELECT DISTINCT source FROM listings_wide)) AND
   (first_review <= '2024-03-11') AND
   (last_review <= '2024-03-11') AND
   (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide))
+  
+  
  
   
   
