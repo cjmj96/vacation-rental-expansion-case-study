@@ -297,6 +297,9 @@ ALTER TABLE reviews_wide DROP COLUMN date;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE reviews_wide RENAME COLUMN new_date TO date;
 
+-- Drop new_last_review column
+ALTER TABLE reviews_wide DROP COLUMN new_last_review;
+
 -- Step 1: Add a new column with the REAL data type
 ALTER TABLE listings ADD COLUMN new_price REAL;
 
@@ -336,13 +339,31 @@ ALTER TABLE listings DROP COLUMN reviews_per_month;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_reviews_per_month TO reviews_per_month;
 
+-- Drop neighbourhood_group column
+ALTER TABLE listings DROP COLUMN neighbourhood_group;
+
+-- Drop license column
+ALTER TABLE listings DROP COLUMN license;
+
+-- Step 1: Add a new column with the DATE data type
+ALTER TABLE reviews ADD COLUMN new_date DATE;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE reviews
+SET new_date = date(substr(date, 1, 4) || '-' || substr(date, 6, 2) || '-' || substr(date, 9, 2));
+
+-- Step 3: Drop the old column
+ALTER TABLE reviews DROP COLUMN date;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE reviews RENAME COLUMN new_date TO date;
+
 -- VERIFY DATA RANGE 
 
--- Filter out data that doesn't meet the following conditions (calendar table) 
---- DELETE FROM calendar
+-- Filter out data that doesn't meet the following conditions (calendar table)
 SELECT * 
 FROM calendar
-WHERE (minimum_nights BETWEEN 1 AND 365) AND (maximum_nights BETWEEN 1 AND 1125) AND (DATE BETWEEN '2024-03-10' AND '2025-03-10') AND (available IN (0, 1)) AND (price > 0)
+WHERE (minimum_nights BETWEEN 1 AND 365) AND (maximum_nights BETWEEN 1 AND 1125) AND (date BETWEEN '2024-03-10' AND '2025-03-10') AND (available IN (0, 1)) AND (price > 0)
 
 -- Filter out data that doesn't meet the following conditions (listings_wide table)
 SELECT * 
@@ -375,7 +396,7 @@ WHERE (source IN (SELECT DISTINCT source FROM listings_wide)) AND
   (calculated_host_listings_count_entire_homes >= 0) AND
   (calculated_host_listings_count_private_rooms >= 0) AND
   (calculated_host_listings_count_shared_rooms >= 0) AND
-  (reviews_per_month >= 0) AND
+  (reviews_per_month > 0) AND
   (last_scraped IN (SELECT DISTINCT last_scraped FROM listings_wide)) AND
   (host_is_superhost IN (SELECT DISTINCT host_is_superhost FROM listings_wide)) AND
   (host_has_profile_pic IN (SELECT DISTINCT host_has_profile_pic FROM listings_wide)) AND
@@ -386,9 +407,29 @@ WHERE (source IN (SELECT DISTINCT source FROM listings_wide)) AND
   (instant_bookable IN (SELECT DISTINCT instant_bookable FROM listings_wide)) AND
   (first_review <= '2024-03-11') AND
   (last_review <= '2024-03-11') AND
-  (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide))
+  (calendar_last_scraped IN (SELECT DISTINCT calendar_last_scraped FROM listings_wide));
   
+-- Filter out data that doesn't meet the following conditions (reviews_wide table) 
+SELECT * 
+FROM reviews_wide
+WHERE (date <= '2024-03-10'); 
+
+-- Filter out data that doesn't meet the following conditions (listings table) 
+SELECT * 
+FROM listings
+WHERE (room_type IN (SELECT DISTINCT room_type FROM listings)) AND
+  (minimum_nights BETWEEN 1 AND 365) AND
+  (number_of_reviews > 0) AND
+  (calculated_host_listings_count > 0) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (number_of_reviews_ltm > 0) AND
+  (price > 0) AND
+  (last_review <= '2024-03-10') AND
+  (reviews_per_month > 0);
   
- 
+-- Filter out data that doesn't meet the following conditions (reviews table) 
+SELECT * 
+FROM reviews
+WHERE date <= '2024-03-10`;
   
   
