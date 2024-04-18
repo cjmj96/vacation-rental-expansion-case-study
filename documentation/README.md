@@ -595,7 +595,7 @@ ALTER TABLE listings DROP COLUMN license;
 ```
 
 When examining the `reviews` table, the `date` column, possess incorrect data types. Consequently, I did so. Next, I will show the SQL commands to achieve this.
-```
+```sql
 -- Step 1: Add a new column with the DATE data type
 ALTER TABLE reviews ADD COLUMN new_date DATE;
 
