@@ -275,7 +275,8 @@ FROM Counts;
 ALTER TABLE calendar DROP COLUMN adjusted_price;
 ```
 
-When examining the `listings_wide` table, the features `scrape_id`,  `last_scraped`, `host_is_superhost`, `host_has_profile_pic`, `host_identity_verified`, `bathrooms`, `beds`, `price`, `has_availability`, `instant_bookable`, `first_review`, `last_review`, and `calendar_last_scraped` possess incorrect data types. So, I converted to its appropiate data types. The `calendar_updated` column was eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
+When examining the `listings_wide` table, the features `scrape_id`,  `last_scraped`, `host_response_rate`, `host_acceptance_rate`, `last_scraped`,  `host_is_superhost`, `host_has_profile_pic`, `host_identity_verified`, `bathrooms`, `beds`, `price`, `has_availability`, `instant_bookable`, `first_review`, `last_review`, and `calendar_last_scraped` possess incorrect data types. So, I converted to its appropiate data types. The `calendar_updated`, `neighbourhood`, `neighbourhood_group_cleansed`, `minimum_minumum_nights`, `maximum_maximum_nights`, `minimum_maximum_nights`, `maximum_minumum_nights`, `minimum_nights_avg_ntm`, `maximum_nights_avg_ntm`, and `license` columns were eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
+
 ```sql
 -- Step 1: Add a new column with the INTEGER data type
 ALTER TABLE listings_wide ADD COLUMN new_scrape_id INTEGER;
@@ -289,6 +290,32 @@ ALTER TABLE listings_wide DROP COLUMN scrape_id;
 
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings_wide RENAME COLUMN new_scrape_id TO scrape_id;
+
+-- Step 1: Add a new column with the REAL data type
+ALTER TABLE listings_wide ADD COLUMN new_host_response_rate REAL;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE listings_wide
+SET new_host_response_rate = CAST(REPLACE(host_response_rate, '%', '') AS REAL);
+
+-- Step 3: Drop the old column
+ALTER TABLE listings_wide DROP COLUMN host_response_rate;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE listings_wide RENAME COLUMN new_host_response_rate TO host_response_rate;
+
+-- Step 1: Add a new column with the REAL data type
+ALTER TABLE listings_wide ADD COLUMN new_host_acceptance_rate REAL;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE listings_wide
+SET new_host_acceptance_rate = CAST(REPLACE(host_acceptance_rate, '%', '') AS REAL);
+
+-- Step 3: Drop the old column
+ALTER TABLE listings_wide DROP COLUMN host_acceptance_rate;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE listings_wide RENAME COLUMN new_host_acceptance_rate TO host_acceptance_rate;
 
 -- Step 1: Add a new column with the DATE data type
 ALTER TABLE listings_wide ADD COLUMN new_last_scraped DATE;
@@ -468,7 +495,196 @@ FROM Counts;
 
 -- Drop calendar_updated column
 ALTER TABLE listings_wide DROP COLUMN calendar_updated;
+
+-- Drop neighbourhood column
+ALTER TABLE listings_wide DROP COLUMN neighbourhood;
+
+-- Drop neighbourhood_group_cleansed column
+ALTER TABLE listings_wide DROP COLUMN neighbourhood_group_cleansed;
+
+-- Drop minimum_minimum_nights column
+ALTER TABLE listings_wide DROP COLUMN minimum_minimum_nights;
+
+-- Drop maximum_minimum_nights column
+ALTER TABLE listings_wide DROP COLUMN maximum_minimum_nights;
+
+-- Drop minimum_maximum_nights column
+ALTER TABLE listings_wide DROP COLUMN minimum_maximum_nights;
+
+-- Drop maximum_maximum_nights column
+ALTER TABLE listings_wide DROP COLUMN maximum_maximum_nights;
+
+-- Drop minimum_nights_avg_ntm column
+ALTER TABLE listings_wide DROP COLUMN minimum_nights_avg_ntm;
+
+-- Drop maximum_nights_avg_ntm column
+ALTER TABLE listings_wide DROP COLUMN maximum_nights_avg_ntm;
+
+-- Drop license column
+ALTER TABLE listings_wide DROP COLUMN license;
 ```
+
+
+When examining the `reviews_wide` table, the column `date` possess incorrect data types. Consequently, I did so. The `new_last_review` column was eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
+
+```sql
+-- Step 1: Add a new column with the DATE data type
+ALTER TABLE reviews_wide ADD COLUMN new_date DATE;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE reviews_wide
+SET new_date = date(substr(date, 1, 4) || '-' || substr(date, 6, 2) || '-' || substr(date, 9, 2));
+
+-- Step 3: Drop the old column
+ALTER TABLE reviews_wide DROP COLUMN date;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE reviews_wide RENAME COLUMN new_date TO date;
+
+-- Drop new_last_review column
+ALTER TABLE reviews_wide DROP COLUMN new_last_review;
+```
+
+When examining the `listings` table, the `price`, `last_review`, and `reviews_per_month` columns, possess incorrect data types. Consequently, I did so. The `neighbourhood_group`, and `license` columns were eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
+
+```
+-- Step 1: Add a new column with the REAL data type
+ALTER TABLE listings ADD COLUMN new_price REAL;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE listings
+SET new_price = CAST(price AS REAL);
+
+-- Step 3: Drop the old column
+ALTER TABLE listings DROP COLUMN price;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE listings RENAME COLUMN new_price TO price;
+
+-- Step 1: Add a new column with the DATE data type
+ALTER TABLE listings ADD COLUMN new_last_review DATE;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE listings
+SET new_last_review = date(substr(last_review, 1, 4) || '-' || substr(last_review, 6, 2) || '-' || substr(last_review, 9, 2));
+
+-- Step 3: Drop the old column
+ALTER TABLE listings DROP COLUMN last_review;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE listings RENAME COLUMN new_last_review TO last_review;
+
+-- Step 1: Add a new column with the REAL data type
+ALTER TABLE listings ADD COLUMN new_reviews_per_month INTEGER;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE listings
+SET new_reviews_per_month = CAST(reviews_per_month AS INTEGER);
+
+-- Step 3: Drop the old column
+ALTER TABLE listings DROP COLUMN reviews_per_month;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE listings RENAME COLUMN new_reviews_per_month TO reviews_per_month;
+
+-- Drop neighbourhood_group column
+ALTER TABLE listings DROP COLUMN neighbourhood_group;
+
+-- Drop license column
+ALTER TABLE listings DROP COLUMN license;
+```
+
+When examining the `reviews` table, the `date` column, possess incorrect data types. Consequently, I did so. Next, I will show the SQL commands to achieve this.
+```
+-- Step 1: Add a new column with the DATE data type
+ALTER TABLE reviews ADD COLUMN new_date DATE;
+
+-- Step 2: Update the new column with the converted values from the old column
+UPDATE reviews
+SET new_date = date(substr(date, 1, 4) || '-' || substr(date, 6, 2) || '-' || substr(date, 9, 2));
+
+-- Step 3: Drop the old column
+ALTER TABLE reviews DROP COLUMN date;
+
+-- Step 4: Rename the new column to the old column's name
+ALTER TABLE reviews RENAME COLUMN new_date TO date;
+```
+
+
+#### **7.2.3.2 Verify data ranges**
+
+I performed the data ranges verification process of all columns across all tables. Subsequently, I create several tables containing the observations that met several conditions. Resulting to in some tables with less observations. Specifically, the `listings`, and `listings_wide` tables were reduced by 50% (202 observations), and 27.22% (294 observations). The other ones remain equal.
+
+```sql
+-- VERIFY DATA RANGES
+
+-- Filter out data that doesn't meet the following conditions (calendar table)
+CREATE TABLE calendar_processed AS
+SELECT *
+FROM calendar
+WHERE (date BETWEEN '2024-03-10' AND '2025-03-10') AND
+  (price > 0);
+
+-- Filter out data that doesn't meet the following conditions (listings_wide table)
+CREATE TABLE listings_wide_processed AS
+SELECT *
+FROM listings_wide
+WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
+  (host_response_rate > 0) AND
+  (host_acceptance_rate > 0) AND
+  (host_listings_count > 0) AND
+  (host_total_listings_count > 0) AND
+  (accommodates > 0) AND
+  (bedrooms > 0) AND
+  (beds > 0) AND
+  (availability_30 BETWEEN 0 AND 30) AND
+  (availability_60 BETWEEN 0 AND 60) AND
+  (availability_90 BETWEEN 0 AND 90) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (review_scores_rating BETWEEN 0 AND 5) AND
+  (review_scores_accuracy BETWEEN 0 AND 5) AND
+  (review_scores_cleanliness BETWEEN 0 AND 5) AND
+  (review_scores_checkin BETWEEN 0 AND 5) AND
+  (review_scores_communication BETWEEN 0 AND 5) AND
+  (review_scores_location BETWEEN 0 AND 5) AND
+  (review_scores_value BETWEEN 0 AND 5) AND
+  (calculated_host_listings_count > 0) AND
+  (calculated_host_listings_count_entire_homes >= 0) AND
+  (calculated_host_listings_count_private_rooms >= 0) AND
+  (calculated_host_listings_count_shared_rooms >= 0) AND
+  (reviews_per_month > 0) AND
+  (last_scraped IN ('2024-03-11', '2024-03-10')) AND
+  (bathrooms > 0) AND
+  (price > 0) AND
+  (first_review <= '2024-03-11') AND
+  (last_review <= '2024-03-11') AND
+  (calendar_last_scraped IN ('2024-03-11', '2024-03-10'));
+
+-- Filter out data that doesn't meet the following conditions (reviews_wide table)
+CREATE TABLE reviews_wide_processed AS
+SELECT *
+FROM reviews_wide
+WHERE (date <= '2024-03-10');
+
+-- Filter out data that doesn't meet the following conditions (listings table)
+CREATE TABLE listings_processed AS
+SELECT *
+FROM listings
+WHERE (number_of_reviews > 0) AND
+  (calculated_host_listings_count > 0) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (number_of_reviews_ltm > 0) AND
+  (price > 0) AND
+  (last_review <= '2024-03-10') AND
+  (reviews_per_month > 0);
+
+-- Filter out data that doesn't meet the following conditions (reviews table)
+CREATE TABLE reviews_processed AS
+SELECT *
+FROM reviews
+WHERE (date <= '2024-03-10')
+```
+
 
 <a id="references"></a>
 ## **9. References**

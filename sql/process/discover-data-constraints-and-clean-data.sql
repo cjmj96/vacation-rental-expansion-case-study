@@ -1,4 +1,3 @@
-
 -- CHECK DATA TYPES
 
 -- Step 1: Add a new column with the DATE data type
@@ -383,7 +382,7 @@ ALTER TABLE reviews DROP COLUMN date;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE reviews RENAME COLUMN new_date TO date;
 
--- VERIFY DATA RANGE 
+-- VERIFY DATA RANGES 
 
 -- Filter out data that doesn't meet the following conditions (calendar table)
 CREATE TABLE calendar_processed AS
@@ -445,7 +444,7 @@ WHERE (number_of_reviews > 0) AND
   (last_review <= '2024-03-10') AND
   (reviews_per_month > 0);
 
--- Filter out data that doesn't meet the following conditions (listings table) 
+-- Filter out data that doesn't meet the following conditions (reviews table) 
 CREATE TABLE reviews_processed AS
 SELECT *
 FROM reviews
