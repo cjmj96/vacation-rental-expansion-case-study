@@ -386,110 +386,68 @@ ALTER TABLE reviews RENAME COLUMN new_date TO date;
 -- VERIFY DATA RANGE 
 
 -- Filter out data that doesn't meet the following conditions (calendar table)
-DELETE FROM calendar
-WHERE (minimum_nights NOT BETWEEN 1 AND 365) AND
-  (maximum_nights NOT BETWEEN 1 AND 1125) AND
-  (date NOT BETWEEN '2024-03-10' AND '2025-03-10') AND
-  (available NOT IN (0, 1)) AND
-  (price <= 0);
-  
--- Filter out data that doesn't meet the following conditions (listings_wide table)
-DELETE FROM listings_wide
-WHERE (host_response_time NOT IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
-      (NOT host_response_rate > 0) AND
-      (NOT host_acceptance_rate > 0) AND
-      (NOT host_listings_count > 0) AND
-      (NOT host_total_listings_count > 0) AND 
-      (NOT accommodates > 0) AND
-      (NOT bedrooms > 0) AND
-      (NOT beds > 0) AND
-	  (minimum_nights NOT BETWEEN 1 AND 365) AND
-      (maximum_nights NOT BETWEEN 1 AND 1125) AND
-      (availability_30 NOT BETWEEN 0 AND 30) AND
-      (availability_60 NOT BETWEEN 0 AND 60) AND
-      (availability_90 NOT BETWEEN 0 AND 90) AND
-      (availability_365 NOT BETWEEN 0 AND 365) AND
-      (review_scores_rating NOT BETWEEN 0 AND 5) AND
-      (review_scores_accuracy NOT BETWEEN 0 AND 5) AND
-      (review_scores_cleanliness NOT BETWEEN 0 AND 5) AND
-      (review_scores_checkin NOT BETWEEN 0 AND 5) AND
-      (review_scores_communication NOT BETWEEN 0 AND 5) AND
-      (review_scores_location NOT BETWEEN 0 AND 5) AND
-      (review_scores_value NOT BETWEEN 0 AND 5) AND
-      (NOT calculated_host_listings_count > 0) AND
-      (NOT calculated_host_listings_count_entire_homes >= 0) AND
-      (NOT calculated_host_listings_count_private_rooms >= 0) AND
-      (NOT calculated_host_listings_count_shared_rooms >= 0) AND
-      (NOT reviews_per_month > 0) AND
-      (last_scraped NOT IN ('2024-03-10', '2024-03-11') AND
-      (NOT bathrooms > 0) AND
-      (NOT price > 0) AND
-      (NOT first_review <= '2024-03-11') AND
-      (NOT last_review > '2024-03-11') AND
-      (calendar_last_scraped NOT IN ('2024-03-10', '2024-03-11'));
-	  
-  
-  
- -- Filter out data that doesn't meet the following conditions (listings_wide table)
-SELECT * 
-FROM listings_wide
-WHERE (host_response_time NOT IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
-  (host_response_rate <= 0) AND
-  (host_acceptance_rate <= 0) AND
-  (host_listings_count <= 0) AND
-  (host_total_listings_count <= 0) AND 
-  (accommodates <= 0) AND
-  (bedrooms <= 0) AND
-  (beds <= 0) AND
-  (minimum_nights NOT BETWEEN 1 AND 365) AND
-  (maximum_nights NOT BETWEEN 1 AND 1125) AND
-  (availability_30 NOT BETWEEN 0 AND 30) AND
-  (availability_60 NOT BETWEEN 0 AND 60) AND
-  (availability_90 NOT BETWEEN 0 AND 90) AND
-  (availability_365 NOT BETWEEN 0 AND 365) AND
-  (review_scores_rating NOT BETWEEN 0 AND 5) AND
-  (review_scores_accuracy NOT BETWEEN 0 AND 5) AND
-  (review_scores_cleanliness NOT BETWEEN 0 AND 5) AND
-  (review_scores_checkin NOT BETWEEN 0 AND 5) AND
-  (review_scores_communication NOT BETWEEN 0 AND 5) AND
-  (review_scores_location NOT BETWEEN 0 AND 5) AND
-  (review_scores_value NOT BETWEEN 0 AND 5) AND
-  (calculated_host_listings_count < 0) AND
-  (calculated_host_listings_count_entire_homes < 0) AND
-  (calculated_host_listings_count_private_rooms < 0) AND
-  (calculated_host_listings_count_shared_rooms < 0) AND
-  (reviews_per_month <= 0) AND
-  (last_scraped NOT IN ('2024-03-11', '2024-03-10')) AND
-  (host_is_superhost NOT IN (0, 1)) AND
-  (host_has_profile_pic NOT IN (0, 1)) AND
-  (host_identity_verified NOT IN (0, 1)) AND
-  (bathrooms <= 0) AND
-  (price <= 0) AND
-  (has_availability NOT IN (0, 1)) AND
-  (instant_bookable NOT IN (0, 1)) AND
-  (first_review > '2024-03-11') AND
-  (last_review > '2024-03-11') AND
-  (calendar_last_scraped NOT IN ('2024-03-11', '2024-03-10'));
+CREATE TABLE calendar_processed AS
+SELECT *
+FROM calendar
+WHERE (date BETWEEN '2024-03-10' AND '2025-03-10') AND
+  (price > 0);
 
-  
+-- Filter out data that doesn't meet the following conditions (listings_wide table)  
+CREATE TABLE listings_wide_processed AS  
+SELECT *
+FROM listings_wide
+WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
+  (host_response_rate > 0) AND
+  (host_acceptance_rate > 0) AND
+  (host_listings_count > 0) AND
+  (host_total_listings_count > 0) AND 
+  (accommodates > 0) AND
+  (bedrooms > 0) AND
+  (beds > 0) AND
+  (availability_30 BETWEEN 0 AND 30) AND
+  (availability_60 BETWEEN 0 AND 60) AND
+  (availability_90 BETWEEN 0 AND 90) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (review_scores_rating BETWEEN 0 AND 5) AND
+  (review_scores_accuracy BETWEEN 0 AND 5) AND
+  (review_scores_cleanliness BETWEEN 0 AND 5) AND
+  (review_scores_checkin BETWEEN 0 AND 5) AND
+  (review_scores_communication BETWEEN 0 AND 5) AND
+  (review_scores_location BETWEEN 0 AND 5) AND
+  (review_scores_value BETWEEN 0 AND 5) AND
+  (calculated_host_listings_count > 0) AND
+  (calculated_host_listings_count_entire_homes >= 0) AND
+  (calculated_host_listings_count_private_rooms >= 0) AND
+  (calculated_host_listings_count_shared_rooms >= 0) AND
+  (reviews_per_month > 0) AND
+  (last_scraped IN ('2024-03-11', '2024-03-10')) AND
+  (bathrooms > 0) AND
+  (price > 0) AND
+  (first_review <= '2024-03-11') AND
+  (last_review <= '2024-03-11') AND
+  (calendar_last_scraped IN ('2024-03-11', '2024-03-10'));  
+
 -- Filter out data that doesn't meet the following conditions (reviews_wide table) 
-DELETE FROM reviews_wide
-WHERE (date > '2024-03-10'); 
+CREATE TABLE reviews_wide_processed AS  
+SELECT *
+FROM reviews_wide
+WHERE (date <= '2024-03-10');
 
 -- Filter out data that doesn't meet the following conditions (listings table) 
-DELETE FROM listings
-WHERE (room_type NOT IN (SELECT DISTINCT room_type FROM listings)) AND
-  (minimum_nights NOT BETWEEN 1 AND 365) AND
-  (number_of_reviews <= 0) AND
-  (calculated_host_listings_count <= 0) AND
-  (availability_365 NOT BETWEEN 0 AND 365) AND
-  (number_of_reviews_ltm <= 0) AND
-  (price <= 0) AND
-  (last_review > '2024-03-10') AND
-  (reviews_per_month <= 0);
-  
--- Filter out data that doesn't meet the following conditions (reviews table) 
-DELETE FROM reviews
-WHERE date > '2024-03-10';
-  
+CREATE TABLE listings_processed AS
+SELECT *
+FROM listings
+WHERE (number_of_reviews > 0) AND
+  (calculated_host_listings_count > 0) AND
+  (availability_365 BETWEEN 0 AND 365) AND
+  (number_of_reviews_ltm > 0) AND
+  (price > 0) AND
+  (last_review <= '2024-03-10') AND
+  (reviews_per_month > 0);
+
+-- Filter out data that doesn't meet the following conditions (listings table) 
+CREATE TABLE reviews_processed AS
+SELECT *
+FROM reviews
+WHERE (date <= '2024-03-10')
   
