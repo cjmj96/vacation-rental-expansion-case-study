@@ -547,7 +547,7 @@ ALTER TABLE reviews_wide DROP COLUMN new_last_review;
 
 When examining the `listings` table, the `price`, `last_review`, and `reviews_per_month` columns, possess incorrect data types. Consequently, I did so. The `neighbourhood_group`, and `license` columns were eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
 
-```
+```sql
 -- Step 1: Add a new column with the REAL data type
 ALTER TABLE listings ADD COLUMN new_price REAL;
 
