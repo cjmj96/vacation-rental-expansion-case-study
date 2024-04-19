@@ -690,8 +690,229 @@ WHERE (date <= '2024-03-10')
 
 The presence of missing values in a dataset is universal. When handling inadequately lead to loss of eficiency and bias. First, The extension of information loss is intrinsically linked to the analysis question. Second, the subsets of complete observations may not be representative of the population under study. Restricting analysis to complete records may then lead to biased interpretations. The extent of such bias depends on the statistical behavior of the missing data. So, a formal framework to describe this behaviour is thus fundamental. I show what methodology was applied in the following sections.
 
-###### 7.2.3.3.1 Amount of missing data
-I found missing values in some tables. Next, I will show the SQL commands to achieve this.
+I found missing observations in the `listings_wide` table and remove them. The missing values were present in the `description` (6 missing values or 2.04%), `neighbourhoods_overview` (106 missing values, representing 36.36%), `host_location` (54 missing values, representing 18.36%), `host_about` (132 missing values, representing 44.89%), `host_neighbourhood` (61 missing values, representing 20.74%) columns. SQlite possess limitations to handle missing data, therefore, the most appropiate method is complete case analysis (CCA). After applying this method, the amount of observations is 65, representing a reduction of 83.91%. It's important to note that by applying the previously mentioned method, some introduced bias will affect the analysis. Next, I will show the SQL commands to achieve this.
+
+```sql
+-- Check mandatory data
+
+-- Determine amount of missing values per column in calendar_processed table
+SELECT
+    COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
+    COUNT(listing_id) as observed_values_listing_id,
+    COUNT(*) - COUNT(minimum_nights) as missing_values_minimum_nights,
+    COUNT(minimum_nights) as observed_values_minimum_nights,
+	COUNT(*) - COUNT(maximum_nights) as missing_values_maximum_nights,
+    COUNT(maximum_nights) as observed_values_maximum_nights,
+	COUNT(*) - COUNT(date) as missing_values_date,
+    COUNT(date) as observed_values_date,
+	COUNT(*) - COUNT(available) as missing_values_available,
+    COUNT(available) as observed_values_available,
+	COUNT(*) - COUNT(maximum_nights) as missing_values_price,
+    COUNT(price) as observed_values_price
+FROM calendar_processed;
+
+-- Determine amount of missing values per column in listings_processed table
+SELECT
+    COUNT(*) - COUNT(id) as missing_values_id,
+    COUNT(id) as observed_values_id,
+    COUNT(*) - COUNT(name) as missing_values_name,
+    COUNT(name) as observed_values_name,
+	COUNT(*) - COUNT(host_id) as missing_values_host_id,
+    COUNT(host_id) as observed_values_host_id,
+	COUNT(*) - COUNT(host_name) as missing_values_host_name,
+    COUNT(host_name) as observed_values_host_name,
+	COUNT(*) - COUNT(neighbourhood) as missing_values_neighbourhood,
+    COUNT(neighbourhood) as observed_values_neighbourhood,
+	COUNT(*) - COUNT(latitude) as missing_values_latitude,
+    COUNT(latitude) as observed_values_latitude,
+	COUNT(*) - COUNT(longitude) as missing_values_longitude,
+    COUNT(longitude) as observed_values_longitude,
+	COUNT(*) - COUNT(room_type) as missing_values_room_type,
+    COUNT(room_type) as observed_values_room_type,
+	COUNT(*) - COUNT(minimum_nights) as missing_values_minimum_nights,
+    COUNT(minimum_nights) as observed_values_minimum_nights,
+	COUNT(*) - COUNT(number_of_reviews) as missing_values_number_of_reviews,
+    COUNT(number_of_reviews) as observed_values_number_of_reviews,
+	COUNT(*) - COUNT(calculated_host_listings_count) as missing_values_calculated_host_listings_count,
+    COUNT(calculated_host_listings_count) as observed_values_calculated_host_listings_count,
+	COUNT(*) - COUNT(availability_365) as missing_values_availability_365,
+    COUNT(availability_365) as observed_values_availability_365,
+	COUNT(*) - COUNT(number_of_reviews_ltm) as missing_values_number_of_reviews_ltm,
+    COUNT(number_of_reviews_ltm) as observed_values_number_of_reviews_ltm,
+	COUNT(*) - COUNT(price) as missing_values_price,
+    COUNT(price) as observed_values_price,
+	COUNT(*) - COUNT(last_review) as missing_values_last_review,
+    COUNT(last_review) as observed_values_last_review,
+	COUNT(*) - COUNT(reviews_per_month) as missing_values_reviews_per_month,
+    COUNT(reviews_per_month) as observed_values_reviews_per_month
+FROM listings_processed;
+
+-- Determine amount of missing values per column in listings_wide_processed table
+SELECT
+    COUNT(*) - COUNT(id) as missing_values_id,
+    COUNT(id) as observed_values_id,
+    COUNT(*) - COUNT(listing_url) as missing_values_listing_url,
+    COUNT(listing_url) as observed_values_listing_url,
+	COUNT(*) - COUNT(source) as missing_values_source,
+    COUNT(source) as observed_values_source,
+	COUNT(*) - COUNT(name) as missing_values_name,
+    COUNT(name) as observed_values_name,
+	COUNT(*) - COUNT(description) as missing_values_description, -- 6
+    COUNT(description) as observed_values_description, -- 288
+	COUNT(*) - COUNT(neighborhood_overview) as missing_values_neighborhood_overview, -- 106
+    COUNT(neighborhood_overview) as observed_values_neighborhood_overview, -- 188
+	COUNT(*) - COUNT(picture_url) as missing_values_picture_url,
+    COUNT(picture_url) as observed_values_picture_url,
+	COUNT(*) - COUNT(host_id) as missing_values_host_id,
+    COUNT(host_id) as observed_values_host_id,
+	COUNT(*) - COUNT(host_url) as missing_values_host_url,
+    COUNT(host_url) as observed_values_host_url,
+	COUNT(*) - COUNT(host_name) as missing_values_host_name,
+    COUNT(host_name) as observed_values_host_name,
+	COUNT(*) - COUNT(host_since) as missing_values_calculated_host_since,
+    COUNT(host_since) as observed_values_host_since,
+	COUNT(*) - COUNT(host_location) as missing_values_host_location, -- 54
+    COUNT(host_location) as observed_values_host_location, -- 240
+	COUNT(*) - COUNT(host_about) as missing_values_host_about, -- 132
+    COUNT(host_about) as observed_values_host_about, -- 162
+	COUNT(*) - COUNT(host_response_time) as missing_values_host_response_time,
+    COUNT(host_response_time) as observed_values_host_response_time,
+	COUNT(*) - COUNT(host_thumbnail_url) as missing_values_host_thumbnail_url,
+    COUNT(host_thumbnail_url) as observed_values_host_thumbnail_url,
+	COUNT(*) - COUNT(host_picture_url) as missing_values_host_picture_url,
+    COUNT(host_picture_url) as observed_values_host_picture_url,
+	COUNT(*) - COUNT(host_neighbourhood) as missing_values_host_neighbourhood, --61
+    COUNT(host_neighbourhood) as observed_values_host_neighbourhood, -- 233
+	COUNT(*) - COUNT(host_listings_count) as missing_values_host_listings_count,
+    COUNT(host_listings_count) as observed_values_host_listings_count,
+	COUNT(*) - COUNT(host_total_listings_count) as missing_values_host_total_listings_count,
+    COUNT(host_total_listings_count) as observed_values_host_total_listings_count,
+	COUNT(*) - COUNT(host_verifications) as missing_values_host_verifications,
+    COUNT(host_verifications) as observed_values_host_verifications,
+	COUNT(*) - COUNT(neighbourhood_cleansed) as missing_values_neighbourhood_cleansed,
+    COUNT(neighbourhood_cleansed) as observed_values_neighbourhood_cleansed,
+	COUNT(*) - COUNT(latitude) as missing_values_latitude,
+    COUNT(latitude) as observed_values_latitude,
+	COUNT(*) - COUNT(longitude) as missing_values_longitude,
+    COUNT(longitude) as observed_values_longitude,
+	COUNT(*) - COUNT(property_type) as missing_values_property_type,
+    COUNT(property_type) as observed_values_property_type,
+	COUNT(*) - COUNT(room_type) as missing_values_room_type,
+    COUNT(room_type) as observed_values_room_type,
+	COUNT(*) - COUNT(accommodates) as missing_values_accommodates,
+    COUNT(accommodates) as observed_values_accommodates,
+	COUNT(*) - COUNT(bathrooms_text) as missing_values_bathrooms_text,
+    COUNT(bathrooms_text) as observed_values_bathrooms_text,
+	COUNT(*) - COUNT(bedrooms) as missing_values_bedrooms,
+    COUNT(bedrooms) as observed_values_bedrooms,
+	COUNT(*) - COUNT(beds) as missing_values_beds,
+    COUNT(beds) as observed_values_beds,
+	COUNT(*) - COUNT(amenities) as missing_values_amenities,
+    COUNT(amenities) as observed_values_amenities,
+	COUNT(*) - COUNT(minimum_nights) as missing_values_minimum_nights,
+    COUNT(minimum_nights) as observed_values_minimum_nights,
+	COUNT(*) - COUNT(maximum_nights) as missing_values_maximum_nights,
+    COUNT(maximum_nights) as observed_values_maximum_nights,
+	COUNT(*) - COUNT(availability_30) as missing_values_availability_30,
+    COUNT(availability_30) as observed_values_availability_30,
+	COUNT(*) - COUNT(availability_60) as missing_values_availability_60,
+    COUNT(availability_60) as observed_values_availability_60,
+	COUNT(*) - COUNT(availability_90) as missing_values_availability_90,
+    COUNT(availability_90) as observed_values_availability_90,
+	COUNT(*) - COUNT(availability_365) as missing_values_availability_365,
+    COUNT(availability_365) as observed_values_availability_365,
+	COUNT(*) - COUNT(number_of_reviews) as missing_values_number_of_reviews,
+    COUNT(number_of_reviews) as observed_values_number_of_reviews,
+	COUNT(*) - COUNT(number_of_reviews_ltm) as missing_values_number_of_reviews_ltm,
+    COUNT(number_of_reviews_ltm) as observed_values_number_of_reviews_ltm,
+	COUNT(*) - COUNT(number_of_reviews_l30d) as missing_values_number_of_reviews_l30d,
+    COUNT(number_of_reviews_l30d) as observed_values_number_of_reviews_l30d,
+	COUNT(*) - COUNT(review_scores_rating) as missing_values_review_scores_rating,
+    COUNT(review_scores_rating) as observed_values_review_scores_rating,
+	COUNT(*) - COUNT(review_scores_accuracy) as missing_values_review_scores_accuracy,
+    COUNT(review_scores_accuracy) as observed_values_review_scores_accuracy,
+	COUNT(*) - COUNT(review_scores_cleanliness) as missing_values_review_scores_cleanliness,
+    COUNT(review_scores_cleanliness) as observed_values_review_scores_cleanliness,
+	COUNT(*) - COUNT(review_scores_checkin) as missing_values_review_scores_checkin,
+    COUNT(review_scores_checkin) as observed_values_review_scores_checkin,
+	COUNT(*) - COUNT(review_scores_communication) as missing_values_review_scores_communication,
+    COUNT(review_scores_communication) as observed_values_review_scores_communication,
+	COUNT(*) - COUNT(review_scores_location) as missing_values_review_scores_location,
+    COUNT(review_scores_location) as observed_values_review_scores_location,
+	COUNT(*) - COUNT(review_scores_value) as missing_values_review_scores_value,
+    COUNT(review_scores_value) as observed_values_review_scores_value,
+	COUNT(*) - COUNT(calculated_host_listings_count) as missing_values_calculated_host_listings_count,
+    COUNT(calculated_host_listings_count) as observed_values_calculated_host_listings_count,
+	COUNT(*) - COUNT(calculated_host_listings_count_entire_homes) as missing_values_calculated_host_listings_count_entire_homes,
+    COUNT(calculated_host_listings_count_entire_homes) as observed_values_calculated_host_listings_count_entire_homes,
+	COUNT(*) - COUNT(calculated_host_listings_count_private_rooms) as missing_values_calculated_host_listings_count_private_rooms,
+    COUNT(calculated_host_listings_count_private_rooms) as observed_values_calculated_host_listings_count_private_rooms,
+	COUNT(*) - COUNT(calculated_host_listings_count_shared_rooms) as missing_values_calculated_host_listings_count_shared_rooms,
+    COUNT(calculated_host_listings_count_shared_rooms) as observed_values_calculated_host_listings_count_shared_rooms,
+	COUNT(*) - COUNT(reviews_per_month) as missing_values_reviews_per_month,
+    COUNT(reviews_per_month) as observed_values_reviews_per_month,
+	COUNT(*) - COUNT(scrape_id) as missing_values_scrape_id,
+    COUNT(scrape_id) as observed_values_scrape_id,
+	COUNT(*) - COUNT(last_scraped) as missing_values_last_scraped,
+    COUNT(last_scraped) as observed_values_last_scraped,
+	COUNT(*) - COUNT(host_is_superhost) as missing_values_host_is_superhost,
+    COUNT(host_is_superhost) as observed_values_host_is_superhost,
+	COUNT(*) - COUNT(host_has_profile_pic) as missing_values_host_has_profile_pic,
+    COUNT(host_has_profile_pic) as observed_values_host_has_profile_pic,
+	COUNT(*) - COUNT(host_identity_verified) as missing_values_host_identity_verified,
+    COUNT(host_identity_verified) as observed_values_host_identity_verified,
+	COUNT(*) - COUNT(bathrooms) as missing_values_bathrooms,
+    COUNT(bathrooms) as observed_values_bathrooms,
+	COUNT(*) - COUNT(price) as missing_values_price,
+    COUNT(price) as observed_values_price,
+	COUNT(*) - COUNT(has_availability) as missing_values_has_availability,
+    COUNT(has_availability) as observed_values_has_availability,
+	COUNT(*) - COUNT(instant_bookable) as missing_values_instant_bookable,
+    COUNT(instant_bookable) as observed_values_instant_bookable,
+	COUNT(*) - COUNT(first_review) as missing_values_first_review,
+    COUNT(first_review) as observed_values_first_review,
+	COUNT(*) - COUNT(last_review) as missing_values_last_review,
+    COUNT(last_review) as observed_values_last_review,
+	COUNT(*) - COUNT(calendar_last_scraped) as missing_values_calendar_last_scraped,
+    COUNT(calendar_last_scraped) as observed_values_calendar_last_scraped,
+	COUNT(*) - COUNT(host_response_rate) as missing_values_host_response_rate,
+    COUNT(host_response_rate) as observed_values_host_response_rate,
+	COUNT(*) - COUNT(host_acceptance_rate) as missing_values_host_acceptance_rate,
+    COUNT(host_acceptance_rate) as observed_values_host_acceptance_rate
+FROM listings_wide_processed;
+
+-- Remove missing data from listings_wide_processed table
+DELETE FROM listings_wide_processed
+WHERE description IS NULL
+OR neighborhood_overview IS NULL
+OR host_location IS NULL
+OR host_about IS NULL
+OR host_neighbourhood IS NULL;
+
+-- Determine amount of missing values per column in reviews_processed table
+SELECT
+    COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
+    COUNT(listing_id) as observed_values_listing_id,
+    COUNT(*) - COUNT(date) as missing_values_date,
+    COUNT(date) as observed_values_date
+FROM reviews_processed;
+
+-- Determine amount of missing values per column in reviews_wide_processed table
+SELECT
+    COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
+    COUNT(listing_id) as observed_values_listing_id,
+    COUNT(*) - COUNT(id) as missing_values_id,
+    COUNT(id) as observed_values_id,
+	COUNT(*) - COUNT(reviewer_id) as missing_values_reviewer_id,
+    COUNT(reviewer_id) as observed_values_reviewer_id,
+	COUNT(*) - COUNT(reviewer_name) as missing_values_reviewer_name,
+    COUNT(reviewer_name) as observed_values_reviewer_name,
+	COUNT(*) - COUNT(comments) as missing_values_comments,
+    COUNT(comments) as observed_values_comments,
+	COUNT(*) - COUNT(date) as missing_values_date,
+    COUNT(date) as observed_values_date
+FROM reviews_wide_processed;
+```
 
 
 
