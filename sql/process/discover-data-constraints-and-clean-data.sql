@@ -514,10 +514,10 @@ SELECT
     COUNT(source) as observed_values_source,
 	COUNT(*) - COUNT(name) as missing_values_name,
     COUNT(name) as observed_values_name,
-	COUNT(*) - COUNT(description) as missing_values_description,
-    COUNT(description) as observed_values_description,
-	COUNT(*) - COUNT(neighborhood_overview) as missing_values_neighborhood_overview,
-    COUNT(neighborhood_overview) as observed_values_neighborhood_overview,
+	COUNT(*) - COUNT(description) as missing_values_description, -- 6
+    COUNT(description) as observed_values_description, -- 288
+	COUNT(*) - COUNT(neighborhood_overview) as missing_values_neighborhood_overview, -- 106
+    COUNT(neighborhood_overview) as observed_values_neighborhood_overview, -- 188
 	COUNT(*) - COUNT(picture_url) as missing_values_picture_url,
     COUNT(picture_url) as observed_values_picture_url,
 	COUNT(*) - COUNT(host_id) as missing_values_host_id,
@@ -528,18 +528,18 @@ SELECT
     COUNT(host_name) as observed_values_host_name,
 	COUNT(*) - COUNT(host_since) as missing_values_calculated_host_since,
     COUNT(host_since) as observed_values_host_since,
-	COUNT(*) - COUNT(host_location) as missing_values_host_location,
-    COUNT(host_location) as observed_values_host_location,
-	COUNT(*) - COUNT(host_about) as missing_values_host_about,
-    COUNT(host_about) as observed_values_host_about,
+	COUNT(*) - COUNT(host_location) as missing_values_host_location, -- 54
+    COUNT(host_location) as observed_values_host_location, -- 240
+	COUNT(*) - COUNT(host_about) as missing_values_host_about, -- 132
+    COUNT(host_about) as observed_values_host_about, -- 162
 	COUNT(*) - COUNT(host_response_time) as missing_values_host_response_time,
     COUNT(host_response_time) as observed_values_host_response_time,
 	COUNT(*) - COUNT(host_thumbnail_url) as missing_values_host_thumbnail_url,
     COUNT(host_thumbnail_url) as observed_values_host_thumbnail_url,
 	COUNT(*) - COUNT(host_picture_url) as missing_values_host_picture_url,
     COUNT(host_picture_url) as observed_values_host_picture_url,
-	COUNT(*) - COUNT(host_neighbourhood) as missing_values_host_neighbourhood,
-    COUNT(host_neighbourhood) as observed_values_host_neighbourhood,
+	COUNT(*) - COUNT(host_neighbourhood) as missing_values_host_neighbourhood, --61
+    COUNT(host_neighbourhood) as observed_values_host_neighbourhood, -- 233
 	COUNT(*) - COUNT(host_listings_count) as missing_values_host_listings_count,
     COUNT(host_listings_count) as observed_values_host_listings_count,
 	COUNT(*) - COUNT(host_total_listings_count) as missing_values_host_total_listings_count,
@@ -637,6 +637,38 @@ SELECT
 	COUNT(*) - COUNT(host_acceptance_rate) as missing_values_host_acceptance_rate,
     COUNT(host_acceptance_rate) as observed_values_host_acceptance_rate
 FROM listings_wide_processed;
+
+-- Remove missing data from listings_wide_processed table
+DELETE FROM listings_wide_processed
+WHERE description IS NULL 
+OR neighborhood_overview IS NULL
+OR host_location IS NULL
+OR host_about IS NULL
+OR host_neighbourhood IS NULL;
+
+-- Determine amount of missing values per column in reviews_processed table
+SELECT 
+    COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
+    COUNT(listing_id) as observed_values_listing_id,
+    COUNT(*) - COUNT(date) as missing_values_date,
+    COUNT(date) as observed_values_date
+FROM reviews_processed;
+
+-- Determine amount of missing values per column in reviews_processed table
+SELECT 
+    COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
+    COUNT(listing_id) as observed_values_listing_id,
+    COUNT(*) - COUNT(id) as missing_values_id,
+    COUNT(id) as observed_values_id,
+	COUNT(*) - COUNT(reviewer_id) as missing_values_reviewer_id,
+    COUNT(reviewer_id) as observed_values_reviewer_id,
+	COUNT(*) - COUNT(reviewer_name) as missing_values_reviewer_name,
+    COUNT(reviewer_name) as observed_values_reviewer_name,
+	COUNT(*) - COUNT(comments) as missing_values_comments,
+    COUNT(comments) as observed_values_comments,
+	COUNT(*) - COUNT(date) as missing_values_date,
+    COUNT(date) as observed_values_date
+FROM reviews_wide_processed;
 
 
   
