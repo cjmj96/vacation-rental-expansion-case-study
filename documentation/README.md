@@ -24,7 +24,7 @@
     - [7.2.2 Overcome the challenges of insufficient data](#overcome-the-challenges-of-insufficient-data)
     - [7.2.3 Discover data constraints and clean data](#discover-data-constraints-and-clean-data)
       - [7.2.3.1 Corroborate data types](#corroborate-data-types)
-      - [7.2.3.2 Check data range](#check-data-range)
+      - [7.2.3.2 Verify data ranges](#verify-data-ranges)
       - [7.2.3.3 Check mandatory data](#check-mandatory-data)
       - [7.2.3.4 Check unique data](#check-unique-data)
       - [7.2.3.5 Check for regular expression (regex) patterns](#check-for-regular-expressions)
@@ -611,6 +611,7 @@ ALTER TABLE reviews RENAME COLUMN new_date TO date;
 ```
 
 
+<a id="verify-data-ranges"></a>
 #### **7.2.3.2 Verify data ranges**
 
 I performed the data ranges verification process of all columns across all tables. Subsequently, I create several tables containing the observations that met several conditions. Resulting to in some tables with less observations. Specifically, the `listings`, and `listings_wide` tables were reduced by 50% (202 observations), and 27.22% (294 observations). The other ones remain equal.
@@ -684,6 +685,17 @@ SELECT *
 FROM reviews
 WHERE (date <= '2024-03-10')
 ```
+
+##### **7.2.3.3 Check mandatory data**
+
+The presence of missing values in a dataset is universal. When handling inadequately lead to loss of eficiency and bias. First, The extension of information loss is intrinsically linked to the analysis question. Second, the subsets of complete observations may not be representative of the population under study. Restricting analysis to complete records may then lead to biased interpretations. The extent of such bias depends on the statistical behavior of the missing data. So, a formal framework to describe this behaviour is thus fundamental. I show what methodology was applied in the following sections.
+
+###### 7.2.3.3.1 Amount of missing data
+I found missing values in some tables. Next, I will show the SQL commands to achieve this.
+
+
+
+
 
 
 <a id="references"></a>
