@@ -691,4 +691,37 @@ FROM reviews_processed;
 -- Verify data uniqueness for reviews_wide_processed table
 SELECT COUNT(DISTINCT(id))
 FROM reviews_wide_processed;
+
+-- Validate cross-field conditions
+
+-- Validate cross-field conditions for calendar_processed table
+SELECT COUNT(*)
+FROM calendar_processed
+WHERE minimum_nights <= maximum_nights
+
+-- Validate cross-field conditions for listings_processed table
+SELECT COUNT(*)
+FROM listings_processed
+WHERE number_of_reviews_ltm <= number_of_reviews
+
+-- Validate cross-field conditions for listings_wide_processed table
+SELECT COUNT(*)
+FROM listings_wide_processed
+WHERE minimum_nights <= maximum_nights
+AND number_of_reviews_ltm <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews_ltm
+AND first_review <= last_review
+
+-- Validate cross-field conditions for reviews_processed table
+SELECT COUNT(*)
+FROM reviews_processed
+WHERE minimum_nights <= maximum_nights
+AND number_of_reviews_ltm <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews_ltm
+AND first_review <= last_review
+
+
+
     

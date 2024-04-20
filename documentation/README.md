@@ -26,23 +26,8 @@
       - [7.2.3.1 Corroborate data types](#corroborate-data-types)
       - [7.2.3.2 Verify data ranges](#verify-data-ranges)
       - [7.2.3.3 Check mandatory data](#check-mandatory-data)
-      - [7.2.3.4 Check unique data](#check-unique-data)
-      - [7.2.3.5 Check for regular expression (regex) patterns](#check-for-regular-expressions)
-      - [7.2.3.6 Check for cross-field validation](#check-for-cross-field-validation)
-      - [7.2.3.7 Check for primary-key](#check-for-primary-key)
-      - [7.2.3.8 Check for set-membership](#check-for-set-membership)
-      - [7.2.3.9 Check for foreign-key](#check-for-foreign-key)
-      - [7.2.3.10 Check for accuracy](#check-for-accuracy)
-      - [7.2.3.11 Check completeness](#check-completeness)
-      - [7.2.3.12 Check for consistency](#check-for-consistency)
-      - [7.2.3.13 Check for misspelled words](#check-for-misspelled-words)
-      - [7.2.3.14 Check for mistyped numbers](#check-for-mistyped-numbers)
-      - [7.2.3.15 Check for extra spaces and characters](#check-for-extra-spaces-and-characters)
-      - [7.2.3.16 Check for misleading variable labels (columns)](#check-for-misleading-variable-labels)
-    - [7.2.4 Review the goal of your project](#review-the-goal-of-your-project)
-      - [7.2.4.1 Confirm the business problem](#confirm-the-business-problem)
-      - [7.2.4.2 Confirm the goal of the project](#confirm-the-goal-of-the-project)
-      - [7.2.4.3 Verify that data can solve the problem and is aligned to the goal](#verify-that-data-can-solve-the-problem-and-is-aligned-to-the-goal)
+      - [7.2.3.4 Verify data uniqueness](#verify-data-uniqueness)
+      - [7.2.3.5 Validate cross-field conditions](#validate-cross-field-conditions)
 - [8. Analyze](#analyze)
   - [8.1 Organize the data](#organize-the-data)
   - [8.2 Format and adjust the data](#format-and-adjust-the-data)
@@ -943,6 +928,41 @@ SELECT COUNT(DISTINCT(id))
 FROM reviews_wide_processed;
 ```
 
+<a id="validate-cross-field-conditions></a>
+##### **7.2.3.5 Validate cross field conditions**
+
+After validating cross field conditions the data remains the same in all tables.
+```sql
+-- Validate cross-field conditions
+
+-- Validate cross-field conditions for calendar_processed table
+SELECT COUNT(*)
+FROM calendar_processed
+WHERE minimum_nights <= maximum_nights
+
+-- Validate cross-field conditions for listings_processed table
+SELECT COUNT(*)
+FROM listings_processed
+WHERE number_of_reviews_ltm <= number_of_reviews
+
+-- Validate cross-field conditions for listings_wide_processed table
+SELECT COUNT(*)
+FROM listings_wide_processed
+WHERE minimum_nights <= maximum_nights
+AND number_of_reviews_ltm <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews_ltm
+AND first_review <= last_review
+
+-- Validate cross-field conditions for reviews_processed table
+SELECT COUNT(*)
+FROM reviews_processed
+WHERE minimum_nights <= maximum_nights
+AND number_of_reviews_ltm <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews
+AND number_of_reviews_l30d <= number_of_reviews_ltm
+AND first_review <= last_review
+```
 
 
 
