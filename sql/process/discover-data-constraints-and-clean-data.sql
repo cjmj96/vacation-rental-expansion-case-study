@@ -670,5 +670,25 @@ SELECT
     COUNT(date) as observed_values_date
 FROM reviews_wide_processed;
 
+-- VERIFY DATA UNIQUENESS
 
-  
+-- Verify data uniqueness for calendar_processed table
+SELECT COUNT(DISTINCT(listing_id))
+FROM calendar_processed;
+
+-- Verify data uniqueness for listings_processed table
+SELECT COUNT(DISTINCT(id))
+FROM listings_processed;
+
+-- Verify data uniqueness for listings_wide_processed table
+SELECT COUNT(DISTINCT(id))
+FROM listings_wide_processed;
+
+-- Verify data uniqueness for reviews_processed table
+SELECT COUNT(DISTINCT(listing_id))
+FROM reviews_processed;
+
+-- Verify data uniqueness for reviews_wide_processed table
+SELECT COUNT(DISTINCT(id))
+FROM reviews_wide_processed;
+    
