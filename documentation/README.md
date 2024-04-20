@@ -686,6 +686,7 @@ FROM reviews
 WHERE (date <= '2024-03-10')
 ```
 
+<a id="check-mandatory-data"></a>
 ##### **7.2.3.3 Check mandatory data**
 
 The presence of missing values in a dataset is universal. When handling inadequately lead to loss of eficiency and bias. First, The extension of information loss is intrinsically linked to the analysis question. Second, the subsets of complete observations may not be representative of the population under study. Restricting analysis to complete records may then lead to biased interpretations. The extent of such bias depends on the statistical behavior of the missing data. So, a formal framework to describe this behaviour is thus fundamental. I show what methodology was applied in the following sections.
@@ -911,6 +912,34 @@ SELECT
     COUNT(comments) as observed_values_comments,
 	COUNT(*) - COUNT(date) as missing_values_date,
     COUNT(date) as observed_values_date
+FROM reviews_wide_processed;
+```
+<a id="verify-data-uniqueness></a>
+##### **7.2.3.4 Verify data uniqueness**
+
+The data exhibits no duplicate records with an exception in `reviews_processed` table. The exception is due to multiple reviews created at different dates for a listing.
+
+```sql
+-- VERIFY DATA UNIQUENESS
+
+-- Verify data uniqueness for calendar_processed table
+SELECT COUNT(DISTINCT(listing_id))
+FROM calendar_processed;
+
+-- Verify data uniqueness for listings_processed table
+SELECT COUNT(DISTINCT(id))
+FROM listings_processed;
+
+-- Verify data uniqueness for listings_wide_processed table
+SELECT COUNT(DISTINCT(id))
+FROM listings_wide_processed;
+
+-- Verify data uniqueness for reviews_processed table
+SELECT COUNT(DISTINCT(listing_id))
+FROM reviews_processed;
+
+-- Verify data uniqueness for reviews_wide_processed table
+SELECT COUNT(DISTINCT(id))
 FROM reviews_wide_processed;
 ```
 
