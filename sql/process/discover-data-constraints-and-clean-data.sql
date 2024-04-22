@@ -1,7 +1,7 @@
 -- CHECK DATA TYPES
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE calendar ADD COLUMN my_new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE calendar ADD COLUMN my_new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE calendar
@@ -13,8 +13,8 @@ ALTER TABLE calendar DROP COLUMN date;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE calendar RENAME COLUMN my_new_date TO date;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE calendar ADD COLUMN new_available BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE calendar ADD COLUMN new_available NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE calendar
@@ -102,8 +102,8 @@ ALTER TABLE listings_wide DROP COLUMN host_acceptance_rate;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings_wide RENAME COLUMN new_host_acceptance_rate TO host_acceptance_rate;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings_wide ADD COLUMN new_last_scraped DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings_wide ADD COLUMN new_last_scraped NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -115,8 +115,8 @@ ALTER TABLE listings_wide DROP COLUMN last_scraped;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings_wide RENAME COLUMN new_last_scraped TO last_scraped;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_host_is_superhost BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_host_is_superhost NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -128,8 +128,8 @@ ALTER TABLE listings_wide DROP COLUMN host_is_superhost;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_host_is_superhost TO host_is_superhost;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_host_has_profile_pic BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_host_has_profile_pic NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -141,8 +141,8 @@ ALTER TABLE listings_wide DROP COLUMN host_has_profile_pic;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_host_has_profile_pic TO host_has_profile_pic;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -154,8 +154,8 @@ ALTER TABLE listings_wide DROP COLUMN host_identity_verified;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_host_identity_verified TO host_identity_verified;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -194,8 +194,8 @@ ALTER TABLE listings_wide DROP COLUMN price;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_price TO price;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_has_availability BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_has_availability NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -207,8 +207,8 @@ ALTER TABLE listings_wide DROP COLUMN has_availability;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_has_availability TO has_availability;
 
--- Step 1: Add a new BOOLEAN column
-ALTER TABLE listings_wide ADD COLUMN new_instant_bookable BOOLEAN;
+-- Step 1: Add a new NUMERIC (BOOLEAN) column
+ALTER TABLE listings_wide ADD COLUMN new_instant_bookable NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -220,8 +220,8 @@ ALTER TABLE listings_wide DROP COLUMN instant_bookable;
 -- Step 4: Rename the new column to the original column name
 ALTER TABLE listings_wide RENAME COLUMN new_instant_bookable TO instant_bookable;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings_wide ADD COLUMN new_first_review DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings_wide ADD COLUMN new_first_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -233,8 +233,8 @@ ALTER TABLE listings_wide DROP COLUMN first_review;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings_wide RENAME COLUMN new_first_review TO first_review;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings_wide ADD COLUMN new_last_review DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings_wide ADD COLUMN new_last_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -246,8 +246,8 @@ ALTER TABLE listings_wide DROP COLUMN last_review;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings_wide RENAME COLUMN new_last_review TO last_review;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings_wide ADD COLUMN new_calendar_last_scraped DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings_wide ADD COLUMN new_calendar_last_scraped NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings_wide
@@ -308,8 +308,8 @@ ALTER TABLE listings_wide DROP COLUMN maximum_nights_avg_ntm;
 -- Drop license column
 ALTER TABLE listings_wide DROP COLUMN license;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE reviews_wide ADD COLUMN new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE reviews_wide ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE reviews_wide
@@ -337,8 +337,8 @@ ALTER TABLE listings DROP COLUMN price;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_price TO price;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings ADD COLUMN new_last_review DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings ADD COLUMN new_last_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings
@@ -350,7 +350,7 @@ ALTER TABLE listings DROP COLUMN last_review;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_last_review TO last_review;
 
--- Step 1: Add a new column with the REAL data type
+-- Step 1: Add a new column with the INTEGER data type
 ALTER TABLE listings ADD COLUMN new_reviews_per_month INTEGER;
 
 -- Step 2: Update the new column with the converted values from the old column
@@ -369,8 +369,8 @@ ALTER TABLE listings DROP COLUMN neighbourhood_group;
 -- Drop license column
 ALTER TABLE listings DROP COLUMN license;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE reviews ADD COLUMN new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE reviews ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE reviews
@@ -721,7 +721,3 @@ AND number_of_reviews_ltm <= number_of_reviews
 AND number_of_reviews_l30d <= number_of_reviews
 AND number_of_reviews_l30d <= number_of_reviews_ltm
 AND first_review <= last_review
-
-
-
-    
