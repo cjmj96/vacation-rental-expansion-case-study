@@ -193,11 +193,11 @@ Data constraints refers to the limitations that affect the way you gather, clean
 <a id="corroborate-data-types"></a>
 #### **7.2.3.1 Corroborate data types**
 
-In the process of data cleaning, I checked all features in the dataset to ensure they presented correct data types. When examining the `calendar` table, the `date`,  `available`, and `price` features possess incorrect data types (TEXT data type). So, I converted to its appropiate data types, DATE, BOOLEAN, and REAL respectively. The `adjusted_price` column was eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
+In the process of data cleaning, I checked all features in the dataset to ensure they presented correct data types. When examining the `calendar` table, the `date`, `available`, and `price` features possess incorrect data types (TEXT data type). So, I converted to its appropiate data types. SQLite supports the concept of "type affinity" on columns, with that in mind I converted all columns to NUMERIC data type [2]. The `adjusted_price` column was eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
 
 ```sql
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE calendar ADD COLUMN my_new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE calendar ADD COLUMN my_new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE calendar
@@ -263,7 +263,6 @@ ALTER TABLE calendar DROP COLUMN adjusted_price;
 When examining the `listings_wide` table, the features `scrape_id`,  `last_scraped`, `host_response_rate`, `host_acceptance_rate`, `last_scraped`,  `host_is_superhost`, `host_has_profile_pic`, `host_identity_verified`, `bathrooms`, `beds`, `price`, `has_availability`, `instant_bookable`, `first_review`, `last_review`, and `calendar_last_scraped` possess incorrect data types. So, I converted to its appropiate data types. The `calendar_updated`, `neighbourhood`, `neighbourhood_group_cleansed`, `minimum_minumum_nights`, `maximum_maximum_nights`, `minimum_maximum_nights`, `maximum_minumum_nights`, `minimum_nights_avg_ntm`, `maximum_nights_avg_ntm`, and `license` columns were eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
 
 ```sql
--- Step 1: Add a new column with the INTEGER data type
 ALTER TABLE listings_wide ADD COLUMN new_scrape_id INTEGER;
 
 -- Step 2: Update the new column with the converted values from the old column
@@ -513,8 +512,8 @@ ALTER TABLE listings_wide DROP COLUMN license;
 When examining the `reviews_wide` table, the column `date` possess incorrect data types. Consequently, I did so. The `new_last_review` column was eliminated due to their high proportion of missing values. Next, I will show the SQL commands to achieve this.
 
 ```sql
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE reviews_wide ADD COLUMN new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE reviews_wide ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE reviews_wide
@@ -546,8 +545,8 @@ ALTER TABLE listings DROP COLUMN price;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_price TO price;
 
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE listings ADD COLUMN new_last_review DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE) data type
+ALTER TABLE listings ADD COLUMN new_last_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE listings
@@ -559,7 +558,7 @@ ALTER TABLE listings DROP COLUMN last_review;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE listings RENAME COLUMN new_last_review TO last_review;
 
--- Step 1: Add a new column with the REAL data type
+-- Step 1: Add a new column with the INTEGER data type
 ALTER TABLE listings ADD COLUMN new_reviews_per_month INTEGER;
 
 -- Step 2: Update the new column with the converted values from the old column
@@ -581,8 +580,8 @@ ALTER TABLE listings DROP COLUMN license;
 
 When examining the `reviews` table, the `date` column, possess incorrect data types. Consequently, I did so. Next, I will show the SQL commands to achieve this.
 ```sql
--- Step 1: Add a new column with the DATE data type
-ALTER TABLE reviews ADD COLUMN new_date DATE;
+-- Step 1: Add a new column with the NUMERIC (DATE data type
+ALTER TABLE reviews ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
 UPDATE reviews
@@ -972,3 +971,6 @@ AND first_review <= last_review
 ## **9. References**
 
 [1] Statista, “Vacation Rentals - United States | Statista Market Forecast,” Statista. https://www.statista.com/outlook/mmo/travel-tourism/vacation-rentals/united-states (accessed April 8, 2024).
+
+[2] SQLite, “Datatypes In SQLite Version 3,” Sqlite. https://www.sqlite.org/datatype3.html (accessed April 8, 2024).
+‌

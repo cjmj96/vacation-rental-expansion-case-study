@@ -369,7 +369,7 @@ ALTER TABLE listings DROP COLUMN neighbourhood_group;
 -- Drop license column
 ALTER TABLE listings DROP COLUMN license;
 
--- Step 1: Add a new column with the NUMERIC (DATE) data type
+-- Step 1: Add a new column with the NUMERIC (DATE data type
 ALTER TABLE reviews ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
