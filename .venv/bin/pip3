@@ -1,4 +1,4 @@
-#!/home/informis/Documents/Code/Projects/vacation-rental-expansion-case-study/.venv/bin/python3
+#!/home/informis/Documents/Code/Projects/vacation-rental-expansion-case-study/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

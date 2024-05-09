@@ -382,7 +382,7 @@ ALTER TABLE reviews DROP COLUMN date;
 -- Step 4: Rename the new column to the old column's name
 ALTER TABLE reviews RENAME COLUMN new_date TO date;
 
--- VERIFY DATA RANGES 
+-- VERIFY DATA RANGES
 
 -- Filter out data that doesn't meet the following conditions (calendar table)
 CREATE TABLE calendar_processed AS
@@ -391,18 +391,19 @@ FROM calendar
 WHERE (date BETWEEN '2024-03-10' AND '2025-03-10') AND
   (price > 0);
 
--- Filter out data that doesn't meet the following conditions (listings_wide table)  
-CREATE TABLE listings_wide_processed AS  
+-- Filter out data that doesn't meet the following conditions (listings_wide table)
+CREATE TABLE listings_wide_processed AS
 SELECT *
 FROM listings_wide
 WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
   (host_response_rate > 0) AND
   (host_acceptance_rate > 0) AND
   (host_listings_count > 0) AND
-  (host_total_listings_count > 0) AND 
+  (host_total_listings_count > 0) AND
   (accommodates > 0) AND
   (bedrooms > 0) AND
   (beds > 0) AND
+  (has_availability = 1) AND
   (availability_30 BETWEEN 0 AND 30) AND
   (availability_60 BETWEEN 0 AND 60) AND
   (availability_90 BETWEEN 0 AND 90) AND
@@ -424,15 +425,15 @@ WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few ho
   (price > 0) AND
   (first_review <= '2024-03-11') AND
   (last_review <= '2024-03-11') AND
-  (calendar_last_scraped IN ('2024-03-11', '2024-03-10'));  
+  (calendar_last_scraped IN ('2024-03-11', '2024-03-10'));
 
--- Filter out data that doesn't meet the following conditions (reviews_wide table) 
-CREATE TABLE reviews_wide_processed AS  
+-- Filter out data that doesn't meet the following conditions (reviews_wide table)
+CREATE TABLE reviews_wide_processed AS
 SELECT *
 FROM reviews_wide
 WHERE (date <= '2024-03-10');
 
--- Filter out data that doesn't meet the following conditions (listings table) 
+-- Filter out data that doesn't meet the following conditions (listings table)
 CREATE TABLE listings_processed AS
 SELECT *
 FROM listings
@@ -444,7 +445,7 @@ WHERE (number_of_reviews > 0) AND
   (last_review <= '2024-03-10') AND
   (reviews_per_month > 0);
 
--- Filter out data that doesn't meet the following conditions (reviews table) 
+-- Filter out data that doesn't meet the following conditions (reviews table)
 CREATE TABLE reviews_processed AS
 SELECT *
 FROM reviews
@@ -453,7 +454,7 @@ WHERE (date <= '2024-03-10')
 -- Check mandatory data
 
 -- Determine amount of missing values per column in calendar_processed table
-SELECT 
+SELECT
     COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
     COUNT(listing_id) as observed_values_listing_id,
     COUNT(*) - COUNT(minimum_nights) as missing_values_minimum_nights,
@@ -469,7 +470,7 @@ SELECT
 FROM calendar_processed;
 
 -- Determine amount of missing values per column in listings_processed table
-SELECT 
+SELECT
     COUNT(*) - COUNT(id) as missing_values_id,
     COUNT(id) as observed_values_id,
     COUNT(*) - COUNT(name) as missing_values_name,
@@ -505,7 +506,7 @@ SELECT
 FROM listings_processed;
 
 -- Determine amount of missing values per column in listings_wide_processed table
-SELECT 
+SELECT
     COUNT(*) - COUNT(id) as missing_values_id,
     COUNT(id) as observed_values_id,
     COUNT(*) - COUNT(listing_url) as missing_values_listing_url,
@@ -640,14 +641,14 @@ FROM listings_wide_processed;
 
 -- Remove missing data from listings_wide_processed table
 DELETE FROM listings_wide_processed
-WHERE description IS NULL 
+WHERE description IS NULL
 OR neighborhood_overview IS NULL
 OR host_location IS NULL
 OR host_about IS NULL
 OR host_neighbourhood IS NULL;
 
 -- Determine amount of missing values per column in reviews_processed table
-SELECT 
+SELECT
     COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
     COUNT(listing_id) as observed_values_listing_id,
     COUNT(*) - COUNT(date) as missing_values_date,
@@ -655,7 +656,7 @@ SELECT
 FROM reviews_processed;
 
 -- Determine amount of missing values per column in reviews_processed table
-SELECT 
+SELECT
     COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
     COUNT(listing_id) as observed_values_listing_id,
     COUNT(*) - COUNT(id) as missing_values_id,
