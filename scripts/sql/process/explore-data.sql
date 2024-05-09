@@ -13,11 +13,11 @@ SELECT COUNT(*)
 FROM listings;
 
 -- List column names for listings_wide table
-PRAGMA table_info(listings_wide);
+PRAGMA table_info(detailed_listings);
 
 -- Count number of observations for listings_wide table
 SELECT COUNT(*)
-FROM listings_wide;
+FROM detailed_listings;
 
 -- List column names for neighbourhoods table
 PRAGMA table_info(neighbourhoods);
@@ -34,8 +34,8 @@ SELECT COUNT(*)
 FROM reviews;
 
 -- List column names for reviews_wide table
-PRAGMA table_info(reviews_wide);
+PRAGMA table_info(detailed_reviews);
 
 -- Count number of observations for reviews_wide table
 SELECT COUNT(*)
-FROM reviews_wide;
+FROM detailed_reviews;

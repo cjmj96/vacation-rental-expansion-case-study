@@ -119,10 +119,10 @@ To make sure the data we're working with is accurate, I used certain tools and t
 
 
 
-The dataset is cross-sectional because I use a single quarterly update (March 10, 2024) from Inside Airbnb, containing Airbnb listings in a particular city for the following 12 months. Therefore, it only represents data in a single time point, there are no repeated observations over multiple time points, which is a defining characteristic of longitudinal data.
+The dataset is cross-sectional because I use a single quarterly update (March 23, 2024) from Inside Airbnb, containing Airbnb listings in a particular city for the following 12 months. Therefore, it only represents data in a single time point, there are no repeated observations over multiple time points, which is a defining characteristic of longitudinal data.
 
 
-The Airbnb data for Albany contain several files with data recorded on a daily level. One such file, `calendar.csv`, aggregates data about Airbnb listings, including `listing ID`, `date`, `availability`, `price`, `adjusted price`, `minimum nights`, and `maximum nights`, with 147,466 observations. The `listings_wide.csv` file contains information about listings including listing ID, URL, name, description, neighborhood overview, host information, and other details about each listing (75 columns) with 404 observations. Additionally, the `reviews_wide.csv` file stores information related to user's review for a listing  `listing_id`, `id`, `date`, `reviewer_id`, `reviewer_name`, and `comments` (6 columns) with 22,112 observations. The remaining files (`listings.csv`, `reviews.csv`) contain summary information about reviews and listings for visualization. The first one contains 18 columns with 404 observations and the second one, 2 columns with 22,112 observations.
+The Airbnb data for Edinburgh contain several files with data recorded on a daily level. One such file, `calendar.csv`, aggregates data about Airbnb listings, including `listing ID`, `date`, `availability`, `price`, `adjusted price`, `minimum nights`, and `maximum nights`, with 1,757,133 observations. The `detailed_listings.csv` file contains information about listings including listing ID, URL, name, description, neighborhood overview, host information, and other details about each listing (75 columns) with 4,812 observations. Additionally, the `detailed_reviews.csv` file stores information related to user's review for a listing  `listing_id`, `id`, `date`, `reviewer_id`, `reviewer_name`, and `comments` (6 columns) with 445,971 observations. The remaining files (`listings.csv`, `reviews.csv`) contain summary information about reviews and listings for visualization. The first one contains 18 columns with 4,814 observations and the second one, 2 columns with 445,971 observations.
 
 The SQL commands to obtain the previous results are the following (`sql/process/explore-data.sql`):
 ```sql
@@ -133,19 +133,19 @@ PRAGMA table_info(calendar);
 SELECT COUNT(*)
 FROM calendar;
 
--- List column names for calendar table
+-- List column names for listings table
 PRAGMA table_info(listings);
 
 -- Count number of observations for listings table
 SELECT COUNT(*)
 FROM listings;
 
--- List column names for listings_wide table
-PRAGMA table_info(listings_wide);
+-- List column names for detailed_listings table
+PRAGMA table_info(detailed_listings);
 
--- Count number of observations for listings_wide table
+-- Count number of observations for detailed_listings table
 SELECT COUNT(*)
-FROM listings_wide;
+FROM detailed_listings;
 
 -- List column names for neighbourhoods table
 PRAGMA table_info(neighbourhoods);
@@ -161,12 +161,12 @@ PRAGMA table_info(reviews);
 SELECT COUNT(*)
 FROM reviews;
 
--- List column names for reviews_wide table
-PRAGMA table_info(reviews_wide);
+-- List column names for detailed_reviews table
+PRAGMA table_info(detailed_reviews);
 
--- Count number of observations for reviews_wide table
+-- Count number of observations for detailed_reviews table
 SELECT COUNT(*)
-FROM reviews_wide;
+FROM detailed_reviews;
 ```
 
 <a id="check-data-integrity"></a>
