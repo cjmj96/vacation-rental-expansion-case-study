@@ -107,7 +107,7 @@ The data possess one main limitation, unknown sample size and generalizability, 
 <a id="format-data"></a>
 ### **6.4 Format data**
 
-I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/albany-ny-airbnb-data.db`.
+I converted the csv files into tables by using the options provided by sqlitebrowser. Those tables are stored as a database located at `/database/edinburgh-airbnb-data.db`.
 
 <a id="process"></a>
 ## **7. Process**
