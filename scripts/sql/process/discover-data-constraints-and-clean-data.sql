@@ -64,207 +64,207 @@ FROM Counts;
 ALTER TABLE calendar DROP COLUMN adjusted_price;
 
 -- Step 1: Add a new column with the INTEGER data type
-ALTER TABLE listings_wide ADD COLUMN new_scrape_id INTEGER;
+ALTER TABLE detailed_listings ADD COLUMN new_scrape_id INTEGER;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_scrape_id = CAST(scrape_id AS INTEGER);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN scrape_id;
+ALTER TABLE detailed_listings DROP COLUMN scrape_id;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_scrape_id TO scrape_id;
+ALTER TABLE detailed_listings RENAME COLUMN new_scrape_id TO scrape_id;
 
 -- Step 1: Add a new column with the REAL data type
-ALTER TABLE listings_wide ADD COLUMN new_host_response_rate REAL;
+ALTER TABLE detailed_listings ADD COLUMN new_host_response_rate REAL;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_response_rate = CAST(REPLACE(host_response_rate, '%', '') AS REAL);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_response_rate;
+ALTER TABLE detailed_listings DROP COLUMN host_response_rate;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_host_response_rate TO host_response_rate;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_response_rate TO host_response_rate;
 
 -- Step 1: Add a new column with the REAL data type
-ALTER TABLE listings_wide ADD COLUMN new_host_acceptance_rate REAL;
+ALTER TABLE detailed_listings ADD COLUMN new_host_acceptance_rate REAL;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_acceptance_rate = CAST(REPLACE(host_acceptance_rate, '%', '') AS REAL);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_acceptance_rate;
+ALTER TABLE detailed_listings DROP COLUMN host_acceptance_rate;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_host_acceptance_rate TO host_acceptance_rate;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_acceptance_rate TO host_acceptance_rate;
 
 -- Step 1: Add a new column with the NUMERIC (DATE) data type
-ALTER TABLE listings_wide ADD COLUMN new_last_scraped NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_last_scraped NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_last_scraped = date(substr(last_scraped, 1, 4) || '-' || substr(last_scraped, 6, 2) || '-' || substr(last_scraped, 9, 2));
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN last_scraped;
+ALTER TABLE detailed_listings DROP COLUMN last_scraped;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_last_scraped TO last_scraped;
+ALTER TABLE detailed_listings RENAME COLUMN new_last_scraped TO last_scraped;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_host_is_superhost NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_host_is_superhost NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_is_superhost = (CASE WHEN host_is_superhost = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_is_superhost;
+ALTER TABLE detailed_listings DROP COLUMN host_is_superhost;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_host_is_superhost TO host_is_superhost;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_is_superhost TO host_is_superhost;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_host_has_profile_pic NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_host_has_profile_pic NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_has_profile_pic = (CASE WHEN host_has_profile_pic = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_has_profile_pic;
+ALTER TABLE detailed_listings DROP COLUMN host_has_profile_pic;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_host_has_profile_pic TO host_has_profile_pic;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_has_profile_pic TO host_has_profile_pic;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_host_identity_verified NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_identity_verified = (CASE WHEN host_identity_verified = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_identity_verified;
+ALTER TABLE detailed_listings DROP COLUMN host_identity_verified;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_host_identity_verified TO host_identity_verified;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_identity_verified TO host_identity_verified;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_host_identity_verified NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_host_identity_verified NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_host_identity_verified = (CASE WHEN host_identity_verified = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN host_identity_verified;
+ALTER TABLE detailed_listings DROP COLUMN host_identity_verified;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_host_identity_verified TO host_identity_verified;
+ALTER TABLE detailed_listings RENAME COLUMN new_host_identity_verified TO host_identity_verified;
 
 -- Step 1: Add a new column with the INTEGER data type
-ALTER TABLE listings_wide ADD COLUMN new_bathrooms INTEGER;
+ALTER TABLE detailed_listings ADD COLUMN new_bathrooms INTEGER;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_bathrooms = CAST(bathrooms AS INTEGER);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN bathrooms;
+ALTER TABLE detailed_listings DROP COLUMN bathrooms;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_bathrooms TO bathrooms;
+ALTER TABLE detailed_listings RENAME COLUMN new_bathrooms TO bathrooms;
 
 -- Step 1: Add a new REAL column
-ALTER TABLE listings_wide ADD COLUMN new_price REAL;
+ALTER TABLE detailed_listings ADD COLUMN new_price REAL;
 
 -- Step 2: Update the new column with the converted values from the old column
 -- Assuming the price is in the format '$50.00'
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_price = CAST(REPLACE(SUBSTR(price, 2), ',', '') AS REAL);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN price;
+ALTER TABLE detailed_listings DROP COLUMN price;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_price TO price;
+ALTER TABLE detailed_listings RENAME COLUMN new_price TO price;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_has_availability NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_has_availability NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_has_availability = (CASE WHEN has_availability = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN has_availability;
+ALTER TABLE detailed_listings DROP COLUMN has_availability;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_has_availability TO has_availability;
+ALTER TABLE detailed_listings RENAME COLUMN new_has_availability TO has_availability;
 
 -- Step 1: Add a new NUMERIC (BOOLEAN) column
-ALTER TABLE listings_wide ADD COLUMN new_instant_bookable NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_instant_bookable NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_instant_bookable = (CASE WHEN instant_bookable = 't' THEN 1 ELSE 0 END);
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN instant_bookable;
+ALTER TABLE detailed_listings DROP COLUMN instant_bookable;
 
 -- Step 4: Rename the new column to the original column name
-ALTER TABLE listings_wide RENAME COLUMN new_instant_bookable TO instant_bookable;
+ALTER TABLE detailed_listings RENAME COLUMN new_instant_bookable TO instant_bookable;
 
 -- Step 1: Add a new column with the NUMERIC (DATE) data type
-ALTER TABLE listings_wide ADD COLUMN new_first_review NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_first_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_first_review = date(substr(first_review, 1, 4) || '-' || substr(first_review, 6, 2) || '-' || substr(first_review, 9, 2));
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN first_review;
+ALTER TABLE detailed_listings DROP COLUMN first_review;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_first_review TO first_review;
+ALTER TABLE detailed_listings RENAME COLUMN new_first_review TO first_review;
 
 -- Step 1: Add a new column with the NUMERIC (DATE) data type
-ALTER TABLE listings_wide ADD COLUMN new_last_review NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_last_review NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_last_review = date(substr(last_review, 1, 4) || '-' || substr(last_review, 6, 2) || '-' || substr(last_review, 9, 2));
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN last_review;
+ALTER TABLE detailed_listings DROP COLUMN last_review;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_last_review TO last_review;
+ALTER TABLE detailed_listings RENAME COLUMN new_last_review TO last_review;
 
 -- Step 1: Add a new column with the NUMERIC (DATE) data type
-ALTER TABLE listings_wide ADD COLUMN new_calendar_last_scraped NUMERIC;
+ALTER TABLE detailed_listings ADD COLUMN new_calendar_last_scraped NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE listings_wide
+UPDATE detailed_listings
 SET new_calendar_last_scraped = date(substr(calendar_last_scraped, 1, 4) || '-' || substr(calendar_last_scraped, 6, 2) || '-' || substr(calendar_last_scraped, 9, 2));
 
 -- Step 3: Drop the old column
-ALTER TABLE listings_wide DROP COLUMN calendar_last_scraped;
+ALTER TABLE detailed_listings DROP COLUMN calendar_last_scraped;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE listings_wide RENAME COLUMN new_calendar_last_scraped TO calendar_last_scraped;
+ALTER TABLE detailed_listings RENAME COLUMN new_calendar_last_scraped TO calendar_last_scraped;
 
 /* Use a common table expression (CTE) named Counts to
 calculate the counts of missing and observed values.*/
 WITH Counts AS (
     SELECT
-        (SELECT COUNT(*) FROM listings_wide WHERE calendar_updated IS NULL OR calendar_updated = '') AS MissingCount,
-        (SELECT COUNT(*) FROM listings_wide WHERE calendar_updated IS NOT NULL AND calendar_updated != '') AS ObservedCount
+        (SELECT COUNT(*) FROM detailed_listings WHERE calendar_updated IS NULL OR calendar_updated = '') AS MissingCount,
+        (SELECT COUNT(*) FROM detailed_listings WHERE calendar_updated IS NOT NULL AND calendar_updated != '') AS ObservedCount
 )
 /*Then, it uses these counts to calculate the
 proportions and percentages of missing and
@@ -279,50 +279,47 @@ SELECT
 FROM Counts;
 
 -- Drop calendar_updated column
-ALTER TABLE listings_wide DROP COLUMN calendar_updated;
+ALTER TABLE detailed_listings DROP COLUMN calendar_updated;
 
 -- Drop neighbourhood column
-ALTER TABLE listings_wide DROP COLUMN neighbourhood;
+ALTER TABLE detailed_listings DROP COLUMN neighbourhood;
 
 -- Drop neighbourhood_group_cleansed column
-ALTER TABLE listings_wide DROP COLUMN neighbourhood_group_cleansed;
+ALTER TABLE detailed_listings DROP COLUMN neighbourhood_group_cleansed;
 
 -- Drop minimum_minimum_nights column
-ALTER TABLE listings_wide DROP COLUMN minimum_minimum_nights;
+ALTER TABLE detailed_listings DROP COLUMN minimum_minimum_nights;
 
 -- Drop maximum_minimum_nights column
-ALTER TABLE listings_wide DROP COLUMN maximum_minimum_nights;
+ALTER TABLE detailed_listings DROP COLUMN maximum_minimum_nights;
 
 -- Drop minimum_maximum_nights column
-ALTER TABLE listings_wide DROP COLUMN minimum_maximum_nights;
+ALTER TABLE detailed_listings DROP COLUMN minimum_maximum_nights;
 
 -- Drop maximum_maximum_nights column
-ALTER TABLE listings_wide DROP COLUMN maximum_maximum_nights;
+ALTER TABLE detailed_listings DROP COLUMN maximum_maximum_nights;
 
 -- Drop minimum_nights_avg_ntm column
-ALTER TABLE listings_wide DROP COLUMN minimum_nights_avg_ntm;
+ALTER TABLE detailed_listings DROP COLUMN minimum_nights_avg_ntm;
 
 -- Drop maximum_nights_avg_ntm column
-ALTER TABLE listings_wide DROP COLUMN maximum_nights_avg_ntm;
+ALTER TABLE detailed_listings DROP COLUMN maximum_nights_avg_ntm;
 
 -- Drop license column
-ALTER TABLE listings_wide DROP COLUMN license;
+ALTER TABLE detailed_listings DROP COLUMN license;
 
 -- Step 1: Add a new column with the NUMERIC (DATE) data type
-ALTER TABLE reviews_wide ADD COLUMN new_date NUMERIC;
+ALTER TABLE detailed_reviews ADD COLUMN new_date NUMERIC;
 
 -- Step 2: Update the new column with the converted values from the old column
-UPDATE reviews_wide
+UPDATE detailed_reviews
 SET new_date = date(substr(date, 1, 4) || '-' || substr(date, 6, 2) || '-' || substr(date, 9, 2));
 
 -- Step 3: Drop the old column
-ALTER TABLE reviews_wide DROP COLUMN date;
+ALTER TABLE detailed_reviews DROP COLUMN date;
 
 -- Step 4: Rename the new column to the old column's name
-ALTER TABLE reviews_wide RENAME COLUMN new_date TO date;
-
--- Drop new_last_review column
-ALTER TABLE reviews_wide DROP COLUMN new_last_review;
+ALTER TABLE detailed_reviews RENAME COLUMN new_date TO date;
 
 -- Step 1: Add a new column with the REAL data type
 ALTER TABLE listings ADD COLUMN new_price REAL;
@@ -388,13 +385,13 @@ ALTER TABLE reviews RENAME COLUMN new_date TO date;
 CREATE TABLE calendar_processed AS
 SELECT *
 FROM calendar
-WHERE (date BETWEEN '2024-03-10' AND '2025-03-10') AND
+WHERE (date BETWEEN '2024-03-23' AND '2025-03-23') AND
   (price > 0);
 
--- Filter out data that doesn't meet the following conditions (listings_wide table)
-CREATE TABLE listings_wide_processed AS
+-- Filter out data that doesn't meet the following conditions (detailed_listings table)
+CREATE TABLE detailed_listings_processed AS
 SELECT *
-FROM listings_wide
+FROM detailed_listings
 WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few hours', 'a few days or more')) AND
   (host_response_rate > 0) AND
   (host_acceptance_rate > 0) AND
@@ -420,18 +417,18 @@ WHERE (host_response_time IN ('within an hour', 'within a day', 'within a few ho
   (calculated_host_listings_count_private_rooms >= 0) AND
   (calculated_host_listings_count_shared_rooms >= 0) AND
   (reviews_per_month > 0) AND
-  (last_scraped IN ('2024-03-11', '2024-03-10')) AND
+  (last_scraped IN ('2024-03-24', '2024-03-23')) AND
   (bathrooms > 0) AND
   (price > 0) AND
-  (first_review <= '2024-03-11') AND
-  (last_review <= '2024-03-11') AND
-  (calendar_last_scraped IN ('2024-03-11', '2024-03-10'));
+  (first_review <= '2024-03-24') AND
+  (last_review <= '2024-03-24') AND
+  (calendar_last_scraped IN ('2024-03-24', '2024-03-23'));
 
--- Filter out data that doesn't meet the following conditions (reviews_wide table)
-CREATE TABLE reviews_wide_processed AS
+-- Filter out data that doesn't meet the following conditions (detailed_reviews table)
+CREATE TABLE detailed_reviews_processed AS
 SELECT *
-FROM reviews_wide
-WHERE (date <= '2024-03-10');
+FROM detailed_reviews
+WHERE (date <= '2024-03-23');
 
 -- Filter out data that doesn't meet the following conditions (listings table)
 CREATE TABLE listings_processed AS
@@ -442,14 +439,14 @@ WHERE (number_of_reviews > 0) AND
   (availability_365 BETWEEN 0 AND 365) AND
   (number_of_reviews_ltm > 0) AND
   (price > 0) AND
-  (last_review <= '2024-03-10') AND
+  (last_review <= '2024-03-23') AND
   (reviews_per_month > 0);
 
 -- Filter out data that doesn't meet the following conditions (reviews table)
 CREATE TABLE reviews_processed AS
 SELECT *
 FROM reviews
-WHERE (date <= '2024-03-10')
+WHERE (date <= '2024-03-23')
 
 -- Check mandatory data
 
@@ -505,7 +502,7 @@ SELECT
     COUNT(reviews_per_month) as observed_values_reviews_per_month
 FROM listings_processed;
 
--- Determine amount of missing values per column in listings_wide_processed table
+-- Determine amount of missing values per column in detailed_listings_processed table
 SELECT
     COUNT(*) - COUNT(id) as missing_values_id,
     COUNT(id) as observed_values_id,
@@ -515,10 +512,10 @@ SELECT
     COUNT(source) as observed_values_source,
 	COUNT(*) - COUNT(name) as missing_values_name,
     COUNT(name) as observed_values_name,
-	COUNT(*) - COUNT(description) as missing_values_description, -- 6
-    COUNT(description) as observed_values_description, -- 288
-	COUNT(*) - COUNT(neighborhood_overview) as missing_values_neighborhood_overview, -- 106
-    COUNT(neighborhood_overview) as observed_values_neighborhood_overview, -- 188
+	COUNT(*) - COUNT(description) as missing_values_description,
+    COUNT(description) as observed_values_description,
+	COUNT(*) - COUNT(neighborhood_overview) as missing_values_neighborhood_overview,
+    COUNT(neighborhood_overview) as observed_values_neighborhood_overview,
 	COUNT(*) - COUNT(picture_url) as missing_values_picture_url,
     COUNT(picture_url) as observed_values_picture_url,
 	COUNT(*) - COUNT(host_id) as missing_values_host_id,
@@ -529,18 +526,18 @@ SELECT
     COUNT(host_name) as observed_values_host_name,
 	COUNT(*) - COUNT(host_since) as missing_values_calculated_host_since,
     COUNT(host_since) as observed_values_host_since,
-	COUNT(*) - COUNT(host_location) as missing_values_host_location, -- 54
-    COUNT(host_location) as observed_values_host_location, -- 240
-	COUNT(*) - COUNT(host_about) as missing_values_host_about, -- 132
-    COUNT(host_about) as observed_values_host_about, -- 162
+	COUNT(*) - COUNT(host_location) as missing_values_host_location,
+    COUNT(host_location) as observed_values_host_location,
+	COUNT(*) - COUNT(host_about) as missing_values_host_about,
+    COUNT(host_about) as observed_values_host_about,
 	COUNT(*) - COUNT(host_response_time) as missing_values_host_response_time,
     COUNT(host_response_time) as observed_values_host_response_time,
 	COUNT(*) - COUNT(host_thumbnail_url) as missing_values_host_thumbnail_url,
     COUNT(host_thumbnail_url) as observed_values_host_thumbnail_url,
 	COUNT(*) - COUNT(host_picture_url) as missing_values_host_picture_url,
     COUNT(host_picture_url) as observed_values_host_picture_url,
-	COUNT(*) - COUNT(host_neighbourhood) as missing_values_host_neighbourhood, --61
-    COUNT(host_neighbourhood) as observed_values_host_neighbourhood, -- 233
+	COUNT(*) - COUNT(host_neighbourhood) as missing_values_host_neighbourhood,
+    COUNT(host_neighbourhood) as observed_values_host_neighbourhood,
 	COUNT(*) - COUNT(host_listings_count) as missing_values_host_listings_count,
     COUNT(host_listings_count) as observed_values_host_listings_count,
 	COUNT(*) - COUNT(host_total_listings_count) as missing_values_host_total_listings_count,
@@ -637,10 +634,10 @@ SELECT
     COUNT(host_response_rate) as observed_values_host_response_rate,
 	COUNT(*) - COUNT(host_acceptance_rate) as missing_values_host_acceptance_rate,
     COUNT(host_acceptance_rate) as observed_values_host_acceptance_rate
-FROM listings_wide_processed;
+FROM detailed_listings_processed;
 
--- Remove missing data from listings_wide_processed table
-DELETE FROM listings_wide_processed
+-- Remove missing data from detailed_listings_processed table
+DELETE FROM detailed_listings_processed
 WHERE description IS NULL
 OR neighborhood_overview IS NULL
 OR host_location IS NULL
@@ -655,7 +652,7 @@ SELECT
     COUNT(date) as observed_values_date
 FROM reviews_processed;
 
--- Determine amount of missing values per column in reviews_processed table
+-- Determine amount of missing values per column in detailed_reviews_processed table
 SELECT
     COUNT(*) - COUNT(listing_id) as missing_values_listing_id,
     COUNT(listing_id) as observed_values_listing_id,
@@ -669,7 +666,7 @@ SELECT
     COUNT(comments) as observed_values_comments,
 	COUNT(*) - COUNT(date) as missing_values_date,
     COUNT(date) as observed_values_date
-FROM reviews_wide_processed;
+FROM detailed_reviews_processed;
 
 -- VERIFY DATA UNIQUENESS
 
@@ -681,17 +678,17 @@ FROM calendar_processed;
 SELECT COUNT(DISTINCT(id))
 FROM listings_processed;
 
--- Verify data uniqueness for listings_wide_processed table
+-- Verify data uniqueness for detailed_listings_processed table
 SELECT COUNT(DISTINCT(id))
-FROM listings_wide_processed;
+FROM detailed_listings_processed;
 
 -- Verify data uniqueness for reviews_processed table
 SELECT COUNT(DISTINCT(listing_id))
 FROM reviews_processed;
 
--- Verify data uniqueness for reviews_wide_processed table
+-- Verify data uniqueness for detailed_reviews_processed table
 SELECT COUNT(DISTINCT(id))
-FROM reviews_wide_processed;
+FROM detailed_reviews_processed;
 
 -- Validate cross-field conditions
 
@@ -705,9 +702,9 @@ SELECT COUNT(*)
 FROM listings_processed
 WHERE number_of_reviews_ltm <= number_of_reviews
 
--- Validate cross-field conditions for listings_wide_processed table
+-- Validate cross-field conditions for detailed_listings_processed table
 SELECT COUNT(*)
-FROM listings_wide_processed
+FROM detailed_listings_processed
 WHERE minimum_nights <= maximum_nights
 AND number_of_reviews_ltm <= number_of_reviews
 AND number_of_reviews_l30d <= number_of_reviews
