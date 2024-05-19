@@ -36,10 +36,20 @@
 - 9. [References](#references)
 
 
+<a id='executive-summary'></a>
+## **1. Executive summary**
+
+
+
 <a id="introduction"></a>
 ## **1. Introduction**
 
-The vacation rentals market in the United States is experiencing constant growth and evolution.  A variety of factors influence this,ranging from customer preferences, trends in the market, local special circumstances, and underlying macroeconomic factors. By 2024, it's to projected to achieve a revenue of $US\$19.77$bn, with an estimated amount of $62.57$m users, and it's expected that $79\%$ of the total revenue in this market will be generated through online sales [1].
+<a id='background'></a>
+### **1.1 Background**
+
+
+
+The vacation rentals market in the United Kingdom (UK) is experiencing constant growth and evolution.  A variety of factors influence this,ranging from customer preferences, trends in the market, local special circumstances, and underlying macroeconomic factors. By 2024, it's to projected to achieve a revenue of $US\$19.77$bn, with an estimated amount of $62.57$m users, and it's expected that $79\%$ of the total revenue in this market will be generated through online sales [1].
 
 
 <a id="scenario"></a>
